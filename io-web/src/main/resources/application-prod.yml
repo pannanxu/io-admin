@@ -1,0 +1,10 @@
+server:
+  compression:
+    enabled: true # 启用 HTTP 响应压缩
+
+# 日志
+logging:
+  file:
+    path: ./logs
+  level:
+    root: info

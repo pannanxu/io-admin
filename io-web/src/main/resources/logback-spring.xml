@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+日志级别说明：
+DEBUG：输出调试信息；指出细粒度信息事件对调试应用程序是非常有帮助的。
+INFO： 输出提示信息；消息在粗粒度级别上突出强调应用程序的运行过程。
+WARN： 输出警告信息；表明会出现潜在错误的情形。
+ERROR：输出错误信息；指出虽然发生错误事件，但仍然不影响系统的继续运行。
+FATAL： 输出致命错误；指出每个严重的错误事件将会导致应用程序的退出。
+ALL level：打开所有日志记录开关；是最低等级的，用于打开所有日志记录。
+OFF level：关闭所有日志记录开关；是最高等级的，用于关闭所有日志记录。
+-->
+<configuration>
+    <!-- 上下文名称， 使用 %contextName 调用 -->
+    <contextName>${spring.application.name}</contextName>
+    <!-- 定义变量 -->
+    <property name="log.pattern" value="%yellow(%d{yyyy-MM-dd HH:mm:ss}) %red([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %green(%msg) %n" />
+    <!-- 属性文件:在配置文件中找到对应的配置项 ${logging.file.path} -->
+    <springProperty scope="context" name="logging.file.path" source="logging.file.path"/>
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="logging.level.root" source="logging.level.root"/>
+
+    <!--
+        appender: 格式化日志输出节点
+            name: 名称
+           class: 日志输出策略
+        在控制台输出日志
+    -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--
+            如果配置文件中`spring.profiles.active`配置的是prod，则表示不打印INFO级别日志
+            仅在测试环境和开发环境打印INFO级别日志，生产环境过滤掉INFO级别日志
+        -->
+        <!--<springProfile name="prod">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>DENY</onMatch>
+                <onMismatch>ACCEPT</onMismatch>
+            </filter>
+        </springProfile>-->
+        <!--
+            %yellow(%d{yyyy-MM-dd HH:mm:ss})    时间，颜色黄色
+            %red([%thread])                     线程名称，颜色红色
+            %highlight(%-5level)                设置5个字符的宽度
+            %cyan(%logger{50})                  class
+            -                                   横线，文本
+            %green(%msg)                        日志消息，颜色绿色
+            %n                                  换行符
+        -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${log.pattern}</pattern>
+        </layout>
+    </appender>
+
+    <!-- 其他日志，即非异常日志 -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤ERROR级别日志 -->
+            <level>ERROR</level>
+            <!-- 匹配到就禁止 -->
+            <onMatch>DENY</onMatch>
+            <!-- 没匹配到就允许 -->
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <!-- 日志编码格式化 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+<!--                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n-->
+                ${log.pattern}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 使用基于时间切分文件的策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--按时间保存日志 修改格式可以按小时、按天、月来保存-->
+            <fileNamePattern>${logging.file.path}/spring.other.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 只保留最近90天日志文件 -->
+            <MaxHistory>90</MaxHistory>
+            <!-- 用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志 -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 异常日志 -->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 只需要ERROR级别日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+<!--                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n-->
+                ${log.pattern}
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.file.path}/spring.error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <MaxHistory>90</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--
+        设置指定包的日志级别
+        name:       包
+        level:      日志级别
+        additivity: 是否向上级 logger 传递打印信息
+     -->
+
+    <!-- Spring日志级别控制  -->
+    <logger name="org.springframework" level="info" />
+    <logger name="org.eclipse" level="info" />
+    <logger name="com.alibaba" level="debug" />
+
+    <root level="${logging.level.root}">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+</configuration>

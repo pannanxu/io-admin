@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.mvvm.mapper.IAccountMapper">
+    <insert id="insert" parameterType="io.mvvm.entity.domain.AccountTab">
+        INSERT INTO SYS_ACCOUNT_TAB (ID, USERNAME, PASSWORD, PHONE, SOURCE_FROM, VERSION, STATUS,
+                                    CREATE_TIME, CREATE_IP, IS_DEL) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.id}, #{item.username}, #{item.password}, #{item.phone}, 0, 1, 0, #{item.createTime}, '127.0.0.1', 0)
+        </foreach>
+    </insert>
+</mapper>

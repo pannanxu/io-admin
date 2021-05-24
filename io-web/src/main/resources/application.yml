@@ -1,0 +1,12 @@
+server:
+  port: 8081
+  jetty:
+    threads:
+      acceptors: 2
+      selectors: 4
+
+spring:
+  application:
+    name: MVVM_ADMIN
+  profiles:
+    active: dev # test、dev、prod

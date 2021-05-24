@@ -1,0 +1,10 @@
+
+
+
+# 日志
+logging:
+  file:
+    path: ./logs
+  level:
+    root: debug
+#  config: E:\work\mvvm-admin\src\main\resources\logback-spring.xml
