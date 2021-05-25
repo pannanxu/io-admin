@@ -3,7 +3,6 @@ package io.mvvm.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import io.mvvm.utils.YamlPropertySourceLoaderUtil;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,7 +10,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -26,23 +24,22 @@ import java.util.List;
  **/
 @Setter
 @Configuration
-@PropertySource(value = "classpath:/config/druid.yml", factory = YamlPropertySourceLoaderUtil.class)
 public class DruidConfig {
 
     private List<String> urlMappings;
-    @Value("${druid.config.allow}")
+    @Value("${spring.config.allow}")
     private String allow;
-    @Value("${druid.config.deny}")
+    @Value("${spring.config.deny}")
     private String deny;
-    @Value("${druid.config.loginUsername}")
+    @Value("${spring.config.loginUsername}")
     private String loginUsername;
-    @Value("${druid.config.loginPassword}")
+    @Value("${spring.config.loginPassword}")
     private String loginPassword;
-    @Value("${druid.config.resetEnable}")
+    @Value("${spring.config.resetEnable}")
     private String resetEnable;
 
     @Bean
-    @ConfigurationProperties(prefix = "druid.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource druidDataSource() {
         return new DruidDataSource();
     }
