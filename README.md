@@ -33,12 +33,8 @@
 │          │  │      └─mvvm
 │          │  │          ├─controller   API 接口
 │          │  │          ├─entity       实体
-│          │  │          │  ├─domain    领域对象，简单说就是对应数据库表的字段
-│          │  │          │  ├─dto       数据传输对象，用来在controller层接收前端传递来的参数
-│          │  │          │  └─vo        视图对象，将数据返回给前端，进一步封装
 │          │  │          ├─mapper       数据访问层
 │          │  │          └─service      业务实现
-│          │  │              └─impl
 │          │  └─resources
 │          │      └─mapper              mybatis 的 xml
 │          └─test                       测试
