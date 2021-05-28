@@ -7,4 +7,3 @@ logging:
     path: ./logs
   level:
     root: debug
-#  config: E:\work\mvvm-admin\src\main\resources\logback-spring.xml
