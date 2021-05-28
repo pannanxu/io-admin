@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @create: 2021-05-22 02:37
  **/
 @Slf4j
-public class CommonWebMvcConfig implements WebMvcConfigurer {
+public class BaseWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

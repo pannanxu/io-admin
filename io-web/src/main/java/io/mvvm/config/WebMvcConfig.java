@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
  **/
 @Configuration
 @Slf4j
-public class WebMvcConfig extends CommonWebMvcConfig {
+public class WebMvcConfig extends BaseWebMvcConfig {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         log.info("addCorsMappings");
