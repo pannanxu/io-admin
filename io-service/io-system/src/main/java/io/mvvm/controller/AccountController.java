@@ -2,13 +2,11 @@ package io.mvvm.controller;
 
 import io.mvvm.common.controller.BaseController;
 import io.mvvm.entity.Ret;
-import io.mvvm.entity.domain.AccountTab;
+import io.mvvm.entity.dto.AccountDTO;
+import io.mvvm.entity.vo.AccountVO;
 import io.mvvm.service.IAccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,15 +25,21 @@ public class AccountController extends BaseController {
     @Resource
     private IAccountService accountService;
 
-    @GetMapping("/get/{id}")
-    public Ret getAccountById(@PathVariable String id) {
-        AccountTab account = accountService.getById(id);
-        return Ret.okData(account);
+    @GetMapping("/{id}")
+    public Ret getAccountById(@PathVariable Long id) {
+        AccountDTO dto = accountService.getAccountById(id);
+        return Ret.okData(dto);
     }
 
-    @GetMapping("/get/list")
+    @GetMapping("/list")
     public Ret getAccountList() {
-        List<AccountTab> accountList = accountService.list();
-        return Ret.okData(accountList);
+        List<AccountDTO> dto = accountService.getAccountList();
+        return Ret.okData(dto);
+    }
+
+    @PutMapping
+    public Ret save(@RequestBody AccountVO vo) {
+        AccountDTO dto = accountService.save(vo);
+        return Ret.okData(dto);
     }
 }
