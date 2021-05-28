@@ -40,6 +40,10 @@ public class Ret {
         return new Ret().setCode(102).setMsg(msg);
     }
 
+    public static Ret result(boolean res) {
+        return res ? ok() : err();
+    }
+
     public boolean isSuccess() {
         return this.code == 100;
     }
