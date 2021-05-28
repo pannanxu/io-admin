@@ -5,6 +5,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * @program: mvvm-admin
  * @description: Spring上下文工具
@@ -18,7 +22,8 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     /**
      * 获取上下文对象
-     * @return  {@link ApplicationContext}
+     *
+     * @return {@link ApplicationContext}
      */
     public static ApplicationContext getCtx() {
         return ctx;
@@ -31,8 +36,9 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     /**
      * 根据Bean名称获取Bean对象
+     *
      * @param beanName Bean名称
-     * @return         Object
+     * @return Object
      */
     public static Object getBean(String beanName) {
         return ctx.getBean(beanName);
@@ -40,9 +46,10 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     /**
      * 根据Bean类型获取Bean对象
+     *
      * @param clazz Bean Type
      * @param <T>   T.class
-     * @return      T
+     * @return T
      */
     public static <T> T getBean(Class<T> clazz) {
         return ctx.getBean(clazz);
@@ -50,10 +57,11 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     /**
      * 根据Bean名称获取Bean对象
-     * @param beanName  Bean名称
-     * @param clazz     T.class
-     * @param <T>       T.class
-     * @return          T
+     *
+     * @param beanName Bean名称
+     * @param clazz    T.class
+     * @param <T>      T.class
+     * @return T
      */
     public static <T> T getBean(String beanName, Class<T> clazz) {
         return ctx.getBean(beanName, clazz);
@@ -61,8 +69,9 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     /**
      * 上下文是否存在Bean
-     * @param beanName  Bean名称
-     * @return          true or false
+     *
+     * @param beanName Bean名称
+     * @return true or false
      */
     public static boolean contains(String beanName) {
         return ctx.containsBean(beanName);
@@ -71,11 +80,33 @@ public class SpringContextHolder implements ApplicationContextAware {
     /**
      * 获取对应Bean名称的类型
      *
-     * @param beanName  Bean名称
-     * @return          返回对应的Bean类型
+     * @param beanName Bean名称
+     * @return 返回对应的Bean类型
      */
     public static Class<?> getType(String beanName) {
         return ctx.getType(beanName);
+    }
+
+    /**
+     * 根据指定类型获取其实现的名称
+     *
+     * @return 实现的名称
+     */
+    public static <T> String[] getBeansByType(Class<T> clazz) {
+        return ctx.getBeanNamesForType(clazz);
+    }
+
+    /**
+     * 获取指定接口的所有实现
+     *
+     * @param clazz T.class
+     * @param <T>   T
+     * @return Set<T>
+     */
+    public static <T> Set<T> getBeanImplByType(Class<T> clazz) {
+        return Arrays.stream(getBeansByType(clazz))
+                .map(e -> getBean(e, clazz))
+                .collect(Collectors.toSet());
     }
 
 }
