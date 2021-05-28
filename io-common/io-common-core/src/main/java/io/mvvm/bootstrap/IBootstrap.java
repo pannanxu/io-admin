@@ -20,6 +20,7 @@ public interface IBootstrap {
 
     /**
      * 启动回调, 在系统启动时会调用此方法
+     * @param args  args
      */
     void start(String... args);
 
