@@ -14,7 +14,7 @@ CREATE TABLE `SYS_ACCOUNT_TAB`
     `CREATE_TIME`             INT(11)             NOT NULL DEFAULT 0 COMMENT '用户创建时间',
     `CREATE_IP`               VARCHAR(12)         NOT NULL DEFAULT '' COMMENT '创建者IP',
     `LAST_LOGIN_TIME`         INT(11)                      DEFAULT 0 COMMENT '用户最后一次登陆时间',
-    `LAST_LOGIN_IP`           INT(11)                      DEFAULT 0 COMMENT '用户最后一次登陆IP',
+    `LAST_LOGIN_IP`           VARCHAR(11)                  DEFAULT 0 COMMENT '用户最后一次登陆IP',
     `LOGIN_COUNT`             INT(10)                      DEFAULT 0 COMMENT '登陆次数',
     `IS_DEL`                  TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '逻辑删除(0:未删除,1:已删除)',
     PRIMARY KEY (`ID`),

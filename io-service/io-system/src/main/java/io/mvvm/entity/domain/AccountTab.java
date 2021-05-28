@@ -47,7 +47,7 @@ public class AccountTab {
     @TableField(value = "LAST_LOGIN_TIME")
     private long lastLoginTime;
     @TableField(value = "LAST_LOGIN_IP")
-    private long lastLoginIp;
+    private String lastLoginIp;
     @TableField(value = "LOGIN_COUNT")
     private int loginCount;
     @TableLogic(value = "0", delval = "1")
