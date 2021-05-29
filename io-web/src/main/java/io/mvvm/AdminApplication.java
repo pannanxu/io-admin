@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create: 2021-05-23 00:57
  **/
 @SpringBootApplication
-@MapperScan("io.mvvm.mapper")
 public class AdminApplication {
 
     public static void main(String[] args) {
