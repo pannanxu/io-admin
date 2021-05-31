@@ -1,64 +1,97 @@
 package io.mvvm.entity;
 
+import io.mvvm.enums.RetTypeEnum;
+
 /**
  * @program: io-admin
  * @description: 响应实体
  * @author: Mr. Pan
  * @create: 2021-05-23 21:10
  **/
-public class Ret {
+@SuppressWarnings("unused")
+public class Ret<T> {
 
     private int code;
     private String msg;
-    private Object data;
+    private T data;
 
-    public static Ret ok() {
-        return new Ret().setCode(100).setMsg("success");
+    public Ret() {
     }
 
-    public static Ret ok(String msg) {
-        return new Ret().setCode(100).setMsg(msg);
+    public Ret(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
-    public static Ret okData(Object data) {
-        return new Ret().setCode(100).setMsg("success").setData(data);
+    public Ret(int code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
     }
 
-    public static Ret fail() {
-        return new Ret().setCode(101).setMsg("fail");
+    public static <T> Ret<T> success() {
+        return new Ret<T>().code(RetTypeEnum.SUCCESS.getCode()).msg(RetTypeEnum.SUCCESS.getMsg());
     }
 
-    public static Ret fail(String msg) {
-        return new Ret().setCode(101).setMsg(msg);
+    public static <T> Ret<T> success(T data) {
+        return new Ret<T>().code(RetTypeEnum.SUCCESS.getCode()).msg(RetTypeEnum.SUCCESS.getMsg()).data(data);
     }
 
-    public static Ret err() {
-        return new Ret().setCode(102).setMsg("error");
+    public static <T> Ret<T> success(RetTypeEnum type, T data) {
+        return new Ret<T>().code(type.getCode()).msg(type.getMsg()).data(data);
     }
 
-    public static Ret err(String msg) {
-        return new Ret().setCode(102).setMsg(msg);
+    public static <T> Ret<T> fail() {
+        return new Ret<T>().code(RetTypeEnum.FAIL.getCode()).msg(RetTypeEnum.FAIL.getMsg());
     }
 
-    public static Ret result(boolean res) {
-        return res ? ok() : err();
+    public static <T> Ret<T> fail(T data) {
+        return new Ret<T>().code(RetTypeEnum.FAIL.getCode()).msg(RetTypeEnum.FAIL.getMsg()).data(data);
+    }
+
+    public static <T> Ret<T> fail(RetTypeEnum type, T data) {
+        return new Ret<T>().code(type.getCode()).msg(type.getMsg()).data(data);
+    }
+
+    public static <T> Ret<T> err() {
+        return new Ret<T>().code(RetTypeEnum.ERROR.getCode()).msg(RetTypeEnum.ERROR.getMsg());
+    }
+
+    public static <T> Ret<T> err(T data) {
+        return new Ret<T>().code(RetTypeEnum.ERROR.getCode()).msg(RetTypeEnum.ERROR.getMsg()).data(data);
+    }
+
+    public static <T> Ret<T> err(RetTypeEnum type, T data) {
+        return new Ret<T>().code(type.getCode()).msg(type.getMsg()).data(data);
+    }
+
+    public static <T> Ret<T> result(boolean res) {
+        return res ? success() : fail();
+    }
+
+    public static <T> Ret<T> type(RetTypeEnum type) {
+        return new Ret<>(type.getCode(), type.getMsg());
+    }
+
+    public static <T> Ret<T> type(RetTypeEnum type, T data) {
+        return new Ret<T>(type.getCode(), type.getMsg()).data(data);
     }
 
     public boolean isSuccess() {
-        return this.code == 100;
+        return this.code == 200;
     }
 
-    public Ret setCode(int code) {
+    public Ret<T> code(int code) {
         this.code = code;
         return this;
     }
 
-    public Ret setMsg(String msg) {
+    public Ret<T> msg(String msg) {
         this.msg = msg;
         return this;
     }
 
-    public Ret setData(Object data) {
+    public Ret<T> data(T data) {
         this.data = data;
         return this;
     }
@@ -71,7 +104,7 @@ public class Ret {
         return msg;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 }
