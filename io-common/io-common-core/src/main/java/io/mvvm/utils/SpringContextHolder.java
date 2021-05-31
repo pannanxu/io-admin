@@ -5,7 +5,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -107,6 +109,16 @@ public class SpringContextHolder implements ApplicationContextAware {
         return Arrays.stream(getBeansByType(clazz))
                 .map(e -> getBean(e, clazz))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * 获取标注指定注解的bean
+     * @param clazzAnnotation 注解类型
+     * @param <A>             <A extends Annotation>
+     * @return                beans
+     */
+    public static <A extends Annotation> Map<String, Object> getBeanByAnnotation(Class<A> clazzAnnotation) {
+        return ctx.getBeansWithAnnotation(clazzAnnotation);
     }
 
 }
