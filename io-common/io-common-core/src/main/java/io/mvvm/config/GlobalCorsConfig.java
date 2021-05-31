@@ -1,6 +1,7 @@
 package io.mvvm.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -11,6 +12,7 @@ import org.springframework.web.filter.CorsFilter;
  * @author: Mr. Pan
  * @create: 2021-05-29 11:21
  **/
+@Component
 public class GlobalCorsConfig {
 
     @Bean

@@ -26,7 +26,8 @@ import java.util.List;
 @Configuration
 public class DruidConfig {
 
-    private List<String> urlMappings;
+    @Value("${spring.config.urlMappings}")
+    private String urlMappings;
     @Value("${spring.config.allow}")
     private String allow;
     @Value("${spring.config.deny}")

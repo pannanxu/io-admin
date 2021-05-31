@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * @author: Mr. Pan
  * @create: 2021-05-25 18:41
  **/
+@SuppressWarnings("all")
 @Component
 @PropertySource(value = "classpath:/config/druid-${spring.profiles.active}.yml", factory = YamlPropertySourceLoaderUtil.class)
 public class DruidPropertySource {
