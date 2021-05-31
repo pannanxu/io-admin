@@ -29,8 +29,8 @@ public class Ret<T> {
         this.data = data;
     }
 
-    public static <T> Ret<T> success() {
-        return new Ret<T>().code(RetTypeEnum.SUCCESS.getCode()).msg(RetTypeEnum.SUCCESS.getMsg());
+    public static <T> Ret<Boolean> success() {
+        return new Ret<Boolean>().code(RetTypeEnum.SUCCESS.getCode()).msg(RetTypeEnum.SUCCESS.getMsg()).data(true);
     }
 
     public static <T> Ret<T> success(T data) {
@@ -41,8 +41,8 @@ public class Ret<T> {
         return new Ret<T>().code(type.getCode()).msg(type.getMsg()).data(data);
     }
 
-    public static <T> Ret<T> fail() {
-        return new Ret<T>().code(RetTypeEnum.FAIL.getCode()).msg(RetTypeEnum.FAIL.getMsg());
+    public static <T> Ret<Boolean> fail() {
+        return new Ret<Boolean>().code(RetTypeEnum.FAIL.getCode()).msg(RetTypeEnum.FAIL.getMsg()).data(false);
     }
 
     public static <T> Ret<T> fail(T data) {
@@ -65,8 +65,8 @@ public class Ret<T> {
         return new Ret<T>().code(type.getCode()).msg(type.getMsg()).data(data);
     }
 
-    public static <T> Ret<T> result(boolean res) {
-        return res ? success() : fail();
+    public static <T> Ret<Boolean> result(boolean res) {
+        return res ? Ret.<Boolean>success() : Ret.<Boolean>fail();
     }
 
     public static <T> Ret<T> type(RetTypeEnum type) {
@@ -75,6 +75,10 @@ public class Ret<T> {
 
     public static <T> Ret<T> type(RetTypeEnum type, T data) {
         return new Ret<T>(type.getCode(), type.getMsg()).data(data);
+    }
+
+    public static <T> Ret<T> type(RetTypeEnum type, T data, String msg) {
+        return new Ret<T>(type.getCode(), msg).data(data);
     }
 
     public boolean isSuccess() {
