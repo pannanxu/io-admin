@@ -1,5 +1,6 @@
 spring:
   config:
+    urlMappings: /druid/*
     allow: 127.0.0.1
     deny: 192.168.31.253
     loginUsername: root
