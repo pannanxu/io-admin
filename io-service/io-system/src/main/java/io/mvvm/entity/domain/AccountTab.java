@@ -13,7 +13,6 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-@Builder
 @TableName("SYS_ACCOUNT_TAB")
 public class AccountTab {
 
