@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.sql.DataSource;
-import java.util.List;
 
 /**
  * @program: io-admin
@@ -39,6 +38,11 @@ public class DruidConfig {
     @Value("${spring.config.resetEnable}")
     private String resetEnable;
 
+    @Value("${spring.config.urlPatterns}")
+    private String urlPatterns;
+    @Value("${spring.config.initParameter}")
+    private String initParameter;
+
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource druidDataSource() {
@@ -48,7 +52,7 @@ public class DruidConfig {
     @Bean
     public ServletRegistrationBean<Servlet> druidServlet() {
         // 进行 druid 监控的配置处理
-        ServletRegistrationBean<Servlet> srb = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
+        ServletRegistrationBean<Servlet> srb = new ServletRegistrationBean<>(new StatViewServlet(), urlMappings.split(","));
         // 白名单
         srb.addInitParameter("allow", allow);
         // 黑名单
@@ -67,9 +71,9 @@ public class DruidConfig {
         FilterRegistrationBean<Filter> frb = new FilterRegistrationBean<>();
         frb.setFilter(new WebStatFilter());
         // 所有请求进行监控处理
-        frb.addUrlPatterns("/*");
+        frb.addUrlPatterns(urlPatterns);
         // 排除名单
-        frb.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.css,/druid/*");
+        frb.addInitParameter("exclusions", initParameter);
         return frb;
     }
 

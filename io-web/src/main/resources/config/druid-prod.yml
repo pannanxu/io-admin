@@ -6,6 +6,8 @@ spring:
     loginUsername: root
     loginPassword: root
     resetEnable: false
+    urlPatterns: /*
+    initParameter: "*.js,*.gif,*.jpg,*.css,/druid/*"
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -6,6 +6,8 @@ spring:
     loginUsername: root
     loginPassword: root
     resetEnable: false
+    urlPatterns: /*
+    initParameter: "*.js,*.gif,*.jpg,*.css,/druid/*"
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     # SQL 日志打印
