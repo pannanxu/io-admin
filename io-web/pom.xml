@@ -72,6 +72,10 @@
             <groupId>io.mvvm</groupId>
             <artifactId>io-system</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.mvvm</groupId>
+            <artifactId>io-common-security</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

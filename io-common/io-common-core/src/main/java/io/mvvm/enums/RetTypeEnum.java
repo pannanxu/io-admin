@@ -29,6 +29,10 @@ public enum RetTypeEnum {
      */
     UNAUTHORIZED(401, "未授权"),
     /**
+     * 授权失败
+     */
+    AUTHORIZED_FAIL(402, "授权失败"),
+    /**
      * 无权限
      */
     NO_PERMISSION(403,"无权限"),
