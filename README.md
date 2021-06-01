@@ -49,3 +49,11 @@
 │      │      └─config
 └─sql                                   SQL
 ```
+
+# 使用教程
+
+```bash
+git clone https://github.com/pannanxu/io-admin.git
+```
+
+...
