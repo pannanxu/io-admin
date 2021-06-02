@@ -30,4 +30,12 @@ public class WebSecurityContextHolder {
         return getSecurityContext().getAuthentication();
     }
 
+    /**
+     * 设置身份信息
+     * @param authentication  身份信息
+     */
+    public static void setAuthentication(Authentication authentication) {
+        getSecurityContext().setAuthentication(authentication);
+    }
+
 }

@@ -21,4 +21,6 @@ public interface IUserAccountMapper {
     @Select("SELECT ID, USERNAME, PASSWORD, ACCOUNT_NON_EXPIRED, ACCOUNT_NON_LOCKED, CREDENTIALS_NON_EXPIRED, STATUS AS ENABLED FROM SYS_ACCOUNT_TAB WHERE USERNAME = #{username}")
     UserAccountDetails selectUserAccountByUserName(String username);
 
+
+
 }
