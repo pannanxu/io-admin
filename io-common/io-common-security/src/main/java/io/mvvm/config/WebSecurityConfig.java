@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         /* 自定义登陆表单解析器 */
-        http.addFilterAt(myUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         /* 配置token验证过滤器 */
         http.addFilterBefore(jwtAuthenticationTokenFilter, AjaxAuthenticationFilter.class);
 
@@ -95,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 自定义JSON登陆参数解析
      */
     @Bean
-    public AjaxAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
+    public AjaxAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
         AjaxAuthenticationFilter filter = new AjaxAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManagerBean());
         filter.setFilterProcessesUrl(AJAX_LOGIN_URI);

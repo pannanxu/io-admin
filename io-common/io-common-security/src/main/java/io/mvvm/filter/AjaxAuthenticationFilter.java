@@ -1,7 +1,7 @@
 package io.mvvm.filter;
 
 import com.alibaba.fastjson.JSON;
-import io.mvvm.utils.ConvertUtil;
+import io.mvvm.entity.UserAccountDetails;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @program: io-admin
@@ -41,14 +40,11 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         } catch (IOException e) {
             throw new AuthenticationServiceException("无效请求");
         }
-        Map<?, ?> body = JSON.parseObject(requestPostStr, Map.class);
 
-        if (body == null) {
-            throw new AuthenticationServiceException("无效请求");
-        }
+        UserAccountDetails entity = JSON.parseObject(requestPostStr, UserAccountDetails.class);
 
-        String username = ConvertUtil.parseString(body.get("username"));
-        String password = ConvertUtil.parseString(body.get("password"));
+        String username = entity.getUsername();
+        String password = entity.getPassword();
 
         if (null == username) {
             username = "";
