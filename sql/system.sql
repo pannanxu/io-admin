@@ -2,7 +2,7 @@ CREATE TABLE `SYS_ACCOUNT_TAB`
 (
     `ID`                      BIGINT(19) UNSIGNED NOT NULL COMMENT 'ID',
     `USERNAME`                VARCHAR(16)         NOT NULL COMMENT '登陆用户名',
-    `PASSWORD`                VARCHAR(20)         NOT NULL COMMENT '登陆密码',
+    `PASSWORD`                VARCHAR(100)         NOT NULL COMMENT '登陆密码',
     `EMAIL`                   VARCHAR(30)                  DEFAULT '' COMMENT '邮箱',
     `PHONE`                   VARCHAR(11)                  DEFAULT '' COMMENT '手机号',
     `SOURCE_FROM`             TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '用户来源',
@@ -26,7 +26,7 @@ CREATE TABLE `SYS_ACCOUNT_TAB`
 
 INSERT INTO `SYS_ACCOUNT_TAB`
 (ID, USERNAME, PASSWORD, PHONE, SOURCE_FROM, VERSION, STATUS, CREATE_TIME, CREATE_IP, IS_DEL)
-values (1, 'root', 'root', '17777777777', 0, 1, 0, 0, '127.0.0.1', 0),
+values (1, 'root', '$2a$10$5aWHU.Ijo3uACrhwP1160eWE6GPpQ8qJHe4eFzxawcMueZPehEKKy', '17777777777', 0, 1, 0, 0, '127.0.0.1', 0),
        (2, 'admin', 'admin', '17777777778', 0, 1, 0, 0, '127.0.0.1', 0),
        (3, 'user', 'user', '17777777779', 0, 1, 0, 0, '127.0.0.1', 0);
 
