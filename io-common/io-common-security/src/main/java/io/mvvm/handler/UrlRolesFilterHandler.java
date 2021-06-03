@@ -23,7 +23,7 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
     /**
      * 不需要授权的uri
      */
-    public static final String[] EXCLUDE_URLS = {"/common**"};
+    public static final String[] EXCLUDE_URLS = {"/common/**"};
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
