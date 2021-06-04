@@ -1,7 +1,7 @@
 package io.mvvm.filter;
 
 import com.alibaba.fastjson.JSON;
-import io.mvvm.entity.UserAccountDetails;
+import io.mvvm.model.UserAccountDetails;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

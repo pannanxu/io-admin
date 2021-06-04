@@ -2,8 +2,8 @@ package io.mvvm.handler;
 
 import com.alibaba.fastjson.JSON;
 import io.mvvm.constant.SecurityConstant;
-import io.mvvm.entity.Ret;
-import io.mvvm.entity.UserAccountDetails;
+import io.mvvm.model.Ret;
+import io.mvvm.model.UserAccountDetails;
 import io.mvvm.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

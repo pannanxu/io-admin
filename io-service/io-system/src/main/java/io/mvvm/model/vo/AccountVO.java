@@ -1,4 +1,4 @@
-package io.mvvm.entity.vo;
+package io.mvvm.model.vo;
 
 import lombok.Getter;
 import lombok.Setter;

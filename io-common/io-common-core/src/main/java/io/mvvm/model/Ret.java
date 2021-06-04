@@ -1,4 +1,4 @@
-package io.mvvm.entity;
+package io.mvvm.model;
 
 import io.mvvm.enums.RetTypeEnum;
 

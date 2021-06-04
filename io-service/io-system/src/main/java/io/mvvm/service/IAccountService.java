@@ -1,9 +1,9 @@
 package io.mvvm.service;
 
 import io.mvvm.common.mybatis.BaseService;
-import io.mvvm.entity.domain.AccountTab;
-import io.mvvm.entity.dto.AccountDTO;
-import io.mvvm.entity.vo.AccountVO;
+import io.mvvm.model.domain.AccountTab;
+import io.mvvm.model.dto.AccountDTO;
+import io.mvvm.model.vo.AccountVO;
 
 import java.util.List;
 

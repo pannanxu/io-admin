@@ -1,10 +1,12 @@
 package io.mvvm.filter;
 
-import io.mvvm.entity.UserAccountDetails;
+import io.mvvm.model.UserAccountDetails;
 import io.mvvm.mapper.IUserAccountMapper;
 import io.mvvm.utils.TokenUtil;
 import io.mvvm.utils.WebSecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @program: io-admin
@@ -48,6 +52,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 userDetails = iUserAccountMapper.selectUserAccountByUserName(username);
 
                 if (userDetails != null) {
+                    // 给用户写入角色，先写死，后面从jwt里取
+                    Set<GrantedAuthority> roles = new HashSet<>();
+                    roles.add(new SimpleGrantedAuthority("root1"));
+                    userDetails.setAuthorities(roles);
                     createAuthentication(userDetails, request);
                 }
             }

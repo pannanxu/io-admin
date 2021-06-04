@@ -1,6 +1,6 @@
 package io.mvvm.mapper;
 
-import io.mvvm.entity.UserAccountDetails;
+import io.mvvm.model.UserAccountDetails;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

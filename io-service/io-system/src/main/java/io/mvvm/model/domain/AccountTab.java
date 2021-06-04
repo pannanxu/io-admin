@@ -1,7 +1,6 @@
-package io.mvvm.entity.domain;
+package io.mvvm.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

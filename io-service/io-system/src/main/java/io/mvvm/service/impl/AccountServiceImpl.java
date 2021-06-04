@@ -1,9 +1,9 @@
 package io.mvvm.service.impl;
 
 import io.mvvm.common.mybatis.BaseServiceImpl;
-import io.mvvm.entity.domain.AccountTab;
-import io.mvvm.entity.dto.AccountDTO;
-import io.mvvm.entity.vo.AccountVO;
+import io.mvvm.model.domain.AccountTab;
+import io.mvvm.model.dto.AccountDTO;
+import io.mvvm.model.vo.AccountVO;
 import io.mvvm.mapper.IAccountMapper;
 import io.mvvm.service.IAccountService;
 import org.springframework.beans.BeanUtils;

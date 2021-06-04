@@ -1,6 +1,6 @@
 package io.mvvm.common.controller;
 
-import io.mvvm.entity.Ret;
+import io.mvvm.model.Ret;
 import io.mvvm.enums.RetTypeEnum;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

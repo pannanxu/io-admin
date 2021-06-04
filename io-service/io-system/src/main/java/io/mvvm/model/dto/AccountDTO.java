@@ -1,4 +1,4 @@
-package io.mvvm.entity.dto;
+package io.mvvm.model.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

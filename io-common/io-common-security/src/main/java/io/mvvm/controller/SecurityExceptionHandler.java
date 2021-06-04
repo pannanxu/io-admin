@@ -1,6 +1,6 @@
 package io.mvvm.controller;
 
-import io.mvvm.entity.Ret;
+import io.mvvm.model.Ret;
 import io.mvvm.enums.RetTypeEnum;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

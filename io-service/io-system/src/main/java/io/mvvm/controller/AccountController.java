@@ -1,8 +1,8 @@
 package io.mvvm.controller;
 
-import io.mvvm.entity.Ret;
-import io.mvvm.entity.dto.AccountDTO;
-import io.mvvm.entity.vo.AccountVO;
+import io.mvvm.model.Ret;
+import io.mvvm.model.dto.AccountDTO;
+import io.mvvm.model.vo.AccountVO;
 import io.mvvm.service.IAccountService;
 import org.springframework.web.bind.annotation.*;
 

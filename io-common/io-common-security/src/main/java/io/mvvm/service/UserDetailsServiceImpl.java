@@ -1,6 +1,6 @@
 package io.mvvm.service;
 
-import io.mvvm.entity.UserAccountDetails;
+import io.mvvm.model.UserAccountDetails;
 import io.mvvm.mapper.IUserAccountMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
 package io.mvvm.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.mvvm.entity.domain.AccountTab;
+import io.mvvm.model.domain.AccountTab;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
