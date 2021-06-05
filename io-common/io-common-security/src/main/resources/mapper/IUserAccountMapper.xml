@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.mvvm.mapper.IUserAccountMapper">
+    <select id="selectResourceApiByRoleName" resultType="io.mvvm.model.ResourceApiDO">
+        SELECT R.URI, RT.ROLE_NAME
+        FROM SYS_RESOURCE_TAB R
+        INNER JOIN SYS_RESOURCE_ROLE_MAPPING RRM
+        ON R.ID = RRM.RESOURCE_ID
+        INNER JOIN SYS_ROLE_TAB RT
+        ON RT.ROLE_NAME IN <foreach item="role" collection="roleNames" index="index" separator="," open="(" close=")">
+                              #{role}
+                           </foreach>
+        AND RRM.ROLE_ID IN (RT.ID)
+        WHERE R.STATUS = 0
+        AND R.METHOD = #{method,jdbcType=INTEGER}
+        GROUP BY R.ID;
+    </select>
+</mapper>

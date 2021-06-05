@@ -1,5 +1,6 @@
 package io.mvvm.config;
 
+import io.mvvm.constant.SecurityConstant;
 import io.mvvm.filter.AjaxAuthenticationFilter;
 import io.mvvm.filter.JwtAuthenticationTokenFilter;
 import io.mvvm.handler.*;
@@ -34,8 +35,6 @@ import java.util.List;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String AJAX_LOGIN_URI = "/ajax/login";
-
     @Resource
     private UserDetailsServiceImpl userDetailsService;
     @Resource
@@ -69,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         /* 无需认证的请求路径 */
-        http.authorizeRequests().antMatchers(AJAX_LOGIN_URI).permitAll();
+        http.authorizeRequests().antMatchers(SecurityConstant.AJAX_LOGIN_URI).permitAll();
         /* 动态url权限 */
         http.authorizeRequests().withObjectPostProcessor(new DefinedObjectPostProcessor());
         /* url决策 */
@@ -98,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AjaxAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
         AjaxAuthenticationFilter filter = new AjaxAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManagerBean());
-        filter.setFilterProcessesUrl(AJAX_LOGIN_URI);
+        filter.setFilterProcessesUrl(SecurityConstant.AJAX_LOGIN_URI);
         // 登陆成功处理器
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         // 登陆失败处理器

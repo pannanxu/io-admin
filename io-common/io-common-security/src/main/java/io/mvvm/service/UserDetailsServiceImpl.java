@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @program: io-admin
@@ -35,8 +35,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         // 添加角色
-        Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority("root"));
+        Set<GrantedAuthority> roles = iUserAccountMapper.selectRoleByAccountId(details.getId())
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
         details.setAuthorities(roles);
         return details;
     }

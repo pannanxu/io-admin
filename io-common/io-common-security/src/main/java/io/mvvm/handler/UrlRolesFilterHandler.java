@@ -1,14 +1,25 @@
 package io.mvvm.handler;
 
+import io.mvvm.constant.SecurityConstant;
+import io.mvvm.enums.MethodEnum;
+import io.mvvm.mapper.IUserAccountMapper;
+import io.mvvm.model.ResourceApiDO;
+import io.mvvm.model.UserAccountDetails;
+import io.mvvm.utils.WebSecurityContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.Collection;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @program: io-admin
@@ -25,17 +36,41 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
      */
     public static final String[] EXCLUDE_URLS = {"/common/**"};
 
+    @Resource
+    private IUserAccountMapper iUserAccountMapper;
+
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         FilterInvocation invocation = (FilterInvocation) object;
+        HttpServletRequest request = invocation.getRequest();
         String requestUrl = invocation.getRequestUrl();
-        // 如果是公共接口,则返回一个匿名角色
-        if (hasPermission(requestUrl, EXCLUDE_URLS)) {
-            return SecurityConfig.createList("ROLE_ANONYMOUS");
+        String method = request.getMethod();
+
+        Authentication authentication = WebSecurityContextHolder.getAuthentication();
+        Object principal = authentication.getPrincipal();
+        // 如果未登录，则验证是否为公共接口
+        if (!(principal instanceof UserAccountDetails)) {
+            String role = hasPermission(requestUrl, EXCLUDE_URLS) ?
+                    SecurityConstant.ROLE_ANONYMOUS :
+                    SecurityConstant.ROLE_NULL;
+            return SecurityConfig.createList(role);
         }
-        //TODO 后面 roles 改为从数据库查询或者redis查询
-        String[] roles = {"root"};
-        return SecurityConfig.createList(roles);
+
+        UserAccountDetails details = (UserAccountDetails) principal;
+        Set<String> roleNames = details.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
+
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        // TODO 后面改为缓存
+        List<ConfigAttribute> roles = iUserAccountMapper.selectResourceApiByRoleName(MethodEnum.getType(method), roleNames)
+                .stream()
+                .filter(e -> antPathMatcher.match(e.getUri(), requestUrl))
+                .map(ResourceApiDO::getRoleName)
+                .map(SecurityConfig::new)
+                .collect(Collectors.toList());
+        return roles.isEmpty() ? SecurityConfig.createList(SecurityConstant.ROLE_NULL) : roles;
     }
 
     @Override

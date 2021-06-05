@@ -1,8 +1,13 @@
 package io.mvvm.mapper;
 
+import io.mvvm.model.ResourceApiDO;
 import io.mvvm.model.UserAccountDetails;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @program: io-admin
@@ -21,6 +26,21 @@ public interface IUserAccountMapper {
     @Select("SELECT ID, USERNAME, PASSWORD, ACCOUNT_NON_EXPIRED, ACCOUNT_NON_LOCKED, CREDENTIALS_NON_EXPIRED, STATUS AS ENABLED FROM SYS_ACCOUNT_TAB WHERE USERNAME = #{username}")
     UserAccountDetails selectUserAccountByUserName(String username);
 
+    /**
+     * 查询用户角色
+     * @param id 账户ID
+     * @return   角色列表
+     */
+    @Select("SELECT R.ROLE_NAME FROM SYS_ROLE_TAB R INNER JOIN SYS_USER_ROLE_MAPPING UR ON R.ID = UR.RID WHERE UR.UID = #{id}")
+    Set<String> selectRoleByAccountId(Long id);
+
+    /**
+     * 按照角色名称查询可用的API资源
+     * @param roleName  角色名称
+     * @param method    请求方式
+     * @return          API资源列表
+     */
+    List<ResourceApiDO> selectResourceApiByRoleName(@Param("method") Integer method, @Param("roleNames") Set<String> roleName);
 
 
 }

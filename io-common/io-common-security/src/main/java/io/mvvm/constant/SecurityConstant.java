@@ -10,4 +10,14 @@ public final class SecurityConstant {
 
     public static final String CONTENT_TYPE_JSON_UTF8 = "application/json; charset=utf-8";
 
+    public static final String AJAX_LOGIN_URI = "/ajax/login";
+    /**
+     * 当无权限的时候，返回此角色，让无权限处理器处理
+     */
+    public static final String ROLE_NULL = "ROLE_NULL";
+    /**
+     * 未认证用户的角色
+     */
+    public static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+
 }

@@ -34,30 +34,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
 
-    @Resource
-    private IUserAccountMapper iUserAccountMapper;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(AUTHORIZATION);
-        UserAccountDetails userDetails;
         if (authHeader != null && authHeader.startsWith(TOKEN_PREFIX)) {
             final String authToken = authHeader.substring(TOKEN_PREFIX_LENGTH);
-
-            String username = TokenUtil.parseToken(authToken);
-
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                // 查询用户信息
-                // TODO 后面将角色信息存入jwt中，避免多次查询数据库
-                userDetails = iUserAccountMapper.selectUserAccountByUserName(username);
-
-                if (userDetails != null) {
-                    // 给用户写入角色，先写死，后面从jwt里取
-                    Set<GrantedAuthority> roles = new HashSet<>();
-                    roles.add(new SimpleGrantedAuthority("root1"));
-                    userDetails.setAuthorities(roles);
-                    createAuthentication(userDetails, request);
-                }
+            UserAccountDetails details = TokenUtil.parseToken(authToken);
+            if (details != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                createAuthentication(details, request);
             }
         }
         chain.doFilter(request, response);

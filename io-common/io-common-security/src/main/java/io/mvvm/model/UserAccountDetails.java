@@ -16,6 +16,8 @@ import java.util.Set;
 @lombok.Setter
 public class UserAccountDetails implements UserDetails, Serializable {
 
+    private Long id;
+
     /**
      * 用户名
      */
@@ -27,7 +29,7 @@ public class UserAccountDetails implements UserDetails, Serializable {
     /**
      * 角色
      */
-    private Set<? extends GrantedAuthority> authorities;
+    private Set<GrantedAuthority> authorities;
     /**
      * 是否过期
      */

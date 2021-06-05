@@ -27,7 +27,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         UserAccountDetails user = (UserAccountDetails) authentication.getPrincipal();
-        String token = TokenUtil.generateToken(user.getUsername());
+        String token = TokenUtil.generateToken(user);
         log.info("授权成功");
         httpServletResponse.setContentType(SecurityConstant.CONTENT_TYPE_JSON_UTF8);
         httpServletResponse.getWriter().write(JSON.toJSONString(Ret.success(token)));
