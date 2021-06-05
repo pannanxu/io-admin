@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @program: io-admin
  * @description: 用户账户模型
@@ -13,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("SYS_ACCOUNT_TAB")
-public class AccountTab {
+public class AccountTab implements Serializable {
 
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private Long id;

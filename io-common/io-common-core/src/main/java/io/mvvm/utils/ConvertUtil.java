@@ -10,6 +10,7 @@ public class ConvertUtil {
 
     public static final String EMPTY = "";
     public static final Integer ZERO = 0;
+    public static final Long ZERO_L = 0L;
 
     public static String parseString(Object var, String defaultVal) {
         return null == var ? defaultVal : var.toString();
@@ -25,6 +26,14 @@ public class ConvertUtil {
 
     public static Integer parseInteger(Object var) {
         return parseInteger(var, ZERO);
+    }
+
+    public static Long parseLong(Object var, Long defaultVal) {
+        return null == var ? defaultVal : (Long) var;
+    }
+
+    public static Long parseLong(Object var) {
+        return parseLong(var, ZERO_L);
     }
 
 }

@@ -3,6 +3,7 @@ package io.mvvm.model.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @program: io-admin
@@ -11,7 +12,7 @@ import javax.validation.constraints.Size;
  * @create: 2021-05-23 20:59
  **/
 @lombok.Data
-public class AccountDTO {
+public class AccountDTO implements Serializable {
 
     private Long id;
     @NotNull(message = "账户名称不能为空")

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @program: io-admin
  * @description: AccountVO
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AccountVO {
+public class AccountVO implements Serializable {
 
     private Long id;
     private String username;
