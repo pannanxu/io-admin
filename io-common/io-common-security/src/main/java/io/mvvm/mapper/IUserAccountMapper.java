@@ -42,5 +42,18 @@ public interface IUserAccountMapper {
      */
     List<ResourceApiDO> selectResourceApiByRoleName(@Param("method") Integer method, @Param("roleNames") Set<String> roleName);
 
+    /**
+     * 根据资源uri查询可管理的角色
+     * @param uri   资源URI
+     * @return      角色列表
+     */
+    @Select("SELECT RT.ROLE_NAME " +
+            "FROM SYS_ROLE_TAB RT " +
+            "         INNER JOIN SYS_RESOURCE_ROLE_MAPPING RRM " +
+            "                    ON RRM.ROLE_ID = RT.ID " +
+            "         INNER JOIN SYS_RESOURCE_TAB RES " +
+            "                    ON RES.URI = #{uri} AND RES.ID = RRM.RESOURCE_ID " +
+            "GROUP BY RT.ID;")
+    Set<String> selectRoleNamesByResourceUri(String uri);
 
 }

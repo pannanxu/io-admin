@@ -1,9 +1,14 @@
 package io.mvvm.utils;
 
+import io.mvvm.model.JwtStoreUserDetailsDTO;
+import io.mvvm.model.UserAccountDetails;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 /**
  * @program: io-common-security
@@ -36,6 +41,20 @@ public class WebSecurityContextHolder {
      */
     public static void setAuthentication(Authentication authentication) {
         getSecurityContext().setAuthentication(authentication);
+    }
+
+    public static JwtStoreUserDetailsDTO getUserDetails() {
+        Authentication authentication = getAuthentication();
+        if (null == authentication) {
+            return null;
+        }
+        UserAccountDetails details = (UserAccountDetails) authentication.getDetails();
+        return JwtStoreUserDetailsDTO.builder()
+                .username(details.getUsername())
+                .accountNonExpired(details.isAccountNonExpired())
+                .credentialsNonExpired(details.isCredentialsNonExpired())
+                .accountNonLocked(details.isAccountNonLocked())
+                .roles(details.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet())).build();
     }
 
 }

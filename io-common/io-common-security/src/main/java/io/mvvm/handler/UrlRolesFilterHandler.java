@@ -56,21 +56,10 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
             return SecurityConfig.createList(role);
         }
 
-        UserAccountDetails details = (UserAccountDetails) principal;
-        Set<String> roleNames = details.getAuthorities()
+        return iUserAccountMapper.selectRoleNamesByResourceUri(requestUrl)
                 .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-
-        AntPathMatcher antPathMatcher = new AntPathMatcher();
-        // TODO 后面改为缓存
-        List<ConfigAttribute> roles = iUserAccountMapper.selectResourceApiByRoleName(MethodEnum.getType(method), roleNames)
-                .stream()
-                .filter(e -> antPathMatcher.match(e.getUri(), requestUrl))
-                .map(ResourceApiDO::getRoleName)
                 .map(SecurityConfig::new)
-                .collect(Collectors.toList());
-        return roles.isEmpty() ? SecurityConfig.createList(SecurityConstant.ROLE_NULL) : roles;
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -92,5 +81,23 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
             }
         }
         return false;
+    }
+
+    /**
+     * 按照ant风格的uri做路由权限验证
+     * @param method        请求方式
+     * @param requestUrl    请求URI
+     * @param roleNames     用户角色列表
+     * @return              ConfigAttribute
+     */
+    private List<ConfigAttribute> byAntCreateConfigAttributes(String method, String requestUrl, Set<String> roleNames) {
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        List<ConfigAttribute> roles = iUserAccountMapper.selectResourceApiByRoleName(MethodEnum.getType(method), roleNames)
+                .stream()
+                .filter(e -> antPathMatcher.match(e.getUri(), requestUrl))
+                .map(ResourceApiDO::getRoleName)
+                .map(SecurityConfig::new)
+                .collect(Collectors.toList());
+        return roles.isEmpty() ? SecurityConfig.createList(SecurityConstant.ROLE_NULL) : roles;
     }
 }

@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
+import io.mvvm.model.JwtStoreUserDetailsDTO;
 import io.mvvm.model.UserAccountDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -116,14 +117,8 @@ public class TokenUtil {
      * @return Token
      */
     public static String generateToken(UserAccountDetails user) {
-        Set<String> roles = user.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-        user.setAuthorities(null);
         Claims map = new DefaultClaims();
-        map.put(STORE_USER_DETAILS_INFO, user);
-        map.put(STORE_USER_ROLE, roles);
+        map.put(STORE_USER_DETAILS_INFO, JSON.toJSONString(transform(user)));
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setClaims(map)
@@ -140,7 +135,7 @@ public class TokenUtil {
      * @param token Token
      * @return 用户ID
      */
-    public static UserAccountDetails parseToken(String token) {
+    public static JwtStoreUserDetailsDTO parseToken(String token) {
         try {
             Jws<Claims> jws = Jwts.parser()
                     // 不使用公钥私钥
@@ -149,23 +144,41 @@ public class TokenUtil {
                     .parseClaimsJws(token);
 
             Claims body = jws.getBody();
-            Object userObj = body.get(STORE_USER_DETAILS_INFO);
-            Object rolesObj = body.get(STORE_USER_ROLE);
-            if (null != userObj) {
-                String userJson = JSON.toJSONString(userObj);
-                String rolesJson = JSON.toJSONString(rolesObj);
-                Set<GrantedAuthority> roles = JSON.parseArray(rolesJson, String.class)
-                        .stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toSet());
-                UserAccountDetails details = JSON.parseObject(userJson, UserAccountDetails.class);
-                details.setAuthorities(roles);
-                return details;
+            String user = ConvertUtil.parseString(body.get(STORE_USER_DETAILS_INFO));
+            if (!"".equals(user)) {
+                return JSON.parseObject(user, JwtStoreUserDetailsDTO.class);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static JwtStoreUserDetailsDTO transform(UserAccountDetails user) {
+        return JwtStoreUserDetailsDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .accountNonExpired(user.isAccountNonExpired())
+                .enabled(user.isEnabled())
+                .accountNonLocked(user.isAccountNonLocked())
+                .credentialsNonExpired(user.isCredentialsNonExpired())
+                .roles(user.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
+    public static UserAccountDetails transform(JwtStoreUserDetailsDTO dto) {
+        UserAccountDetails details = new UserAccountDetails();
+        details.setId(dto.getId());
+        details.setUsername(dto.getUsername());
+        details.setAccountNonExpired(dto.getAccountNonExpired());
+        details.setEnabled(dto.getEnabled());
+        details.setAccountNonLocked(dto.getAccountNonLocked());
+        details.setCredentialsNonExpired(dto.getCredentialsNonExpired());
+        details.setAuthorities(dto.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
+        return details;
     }
 
 }
