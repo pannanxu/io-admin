@@ -12,9 +12,7 @@ import java.util.stream.Collectors;
  * @author: Mr. Pan
  * @create: 2021-06-07 23:10
  **/
-@Builder
-@Getter
-@Setter
+@Data
 @ToString
 public class JwtStoreUserDetailsDTO {
 

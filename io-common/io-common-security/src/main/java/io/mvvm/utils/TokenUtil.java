@@ -155,18 +155,20 @@ public class TokenUtil {
     }
 
     public static JwtStoreUserDetailsDTO transform(UserAccountDetails user) {
-        return JwtStoreUserDetailsDTO.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .accountNonExpired(user.isAccountNonExpired())
-                .enabled(user.isEnabled())
-                .accountNonLocked(user.isAccountNonLocked())
-                .credentialsNonExpired(user.isCredentialsNonExpired())
-                .roles(user.getAuthorities()
+        JwtStoreUserDetailsDTO dto = new JwtStoreUserDetailsDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setAccountNonExpired(user.isAccountNonExpired());
+        dto.setEnabled(user.isEnabled());
+        dto.setAccountNonLocked(user.isAccountNonLocked());
+        dto.setCredentialsNonExpired(user.isCredentialsNonExpired());
+        dto.setRoles(
+                user.getAuthorities()
                         .stream()
                         .map(GrantedAuthority::getAuthority)
-                        .collect(Collectors.toSet()))
-                .build();
+                        .collect(Collectors.toSet())
+        );
+        return dto;
     }
 
     public static UserAccountDetails transform(JwtStoreUserDetailsDTO dto) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.mvvm.mapper.IResourceMapper">
+    <select id="selectResourceListByType" resultType="io.mvvm.model.domain.ResourceTab">
+        SELECT RT.*
+        FROM SYS_RESOURCE_TAB RT
+        INNER JOIN SYS_RESOURCE_ROLE_MAPPING RRM
+        ON RRM.RESOURCE_ID = RT.ID
+        INNER JOIN SYS_ROLE_TAB SRT
+        ON SRT.ROLE_NAME IN
+        <foreach collection="roles" item="role" open="(" close=")" separator="," index="i">
+            #{role}
+        </foreach>
+        AND RT.TYPE = #{type}
+        AND RT.STATUS = 1
+        GROUP BY RT.ID
+    </select>
+</mapper>

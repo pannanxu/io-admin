@@ -56,7 +56,7 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
             return SecurityConfig.createList(role);
         }
 
-        return iUserAccountMapper.selectRoleNamesByResourceUri(requestUrl)
+        return iUserAccountMapper.selectRoleNamesByResourceUri(requestUrl, MethodEnum.getType(method))
                 .stream()
                 .map(SecurityConfig::new)
                 .collect(Collectors.toSet());

@@ -21,7 +21,8 @@ public class WebSecurityContextHolder {
 
     /**
      * 获取安全上下文
-     * @return  {@link SecurityContext}
+     *
+     * @return {@link SecurityContext}
      */
     public static SecurityContext getSecurityContext() {
         return SecurityContextHolder.getContext();
@@ -29,7 +30,8 @@ public class WebSecurityContextHolder {
 
     /**
      * 获取当前已认证的主体或认证请求令牌
-     * @return  如果没有可用的身份验证信息，则为null
+     *
+     * @return 如果没有可用的身份验证信息，则为null
      */
     public static Authentication getAuthentication() {
         return getSecurityContext().getAuthentication();
@@ -37,24 +39,33 @@ public class WebSecurityContextHolder {
 
     /**
      * 设置身份信息
-     * @param authentication  身份信息
+     *
+     * @param authentication 身份信息
      */
     public static void setAuthentication(Authentication authentication) {
         getSecurityContext().setAuthentication(authentication);
     }
 
+    /**
+     * 获取当前认证用户信息
+     *
+     * @return 用户信息
+     */
     public static JwtStoreUserDetailsDTO getUserDetails() {
         Authentication authentication = getAuthentication();
-        if (null == authentication) {
-            return null;
-        }
-        UserAccountDetails details = (UserAccountDetails) authentication.getDetails();
-        return JwtStoreUserDetailsDTO.builder()
-                .username(details.getUsername())
-                .accountNonExpired(details.isAccountNonExpired())
-                .credentialsNonExpired(details.isCredentialsNonExpired())
-                .accountNonLocked(details.isAccountNonLocked())
-                .roles(details.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet())).build();
+        UserAccountDetails details = (UserAccountDetails) authentication.getPrincipal();
+        JwtStoreUserDetailsDTO dto = new JwtStoreUserDetailsDTO();
+        dto.setUsername(details.getUsername());
+        dto.setAccountNonExpired(details.isAccountNonExpired());
+        dto.setCredentialsNonExpired(details.isCredentialsNonExpired());
+        dto.setAccountNonLocked(details.isAccountNonLocked());
+        dto.setRoles(
+                details.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toSet())
+        );
+        return dto;
     }
 
 }

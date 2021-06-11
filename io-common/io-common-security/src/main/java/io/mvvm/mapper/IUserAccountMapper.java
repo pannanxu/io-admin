@@ -52,8 +52,8 @@ public interface IUserAccountMapper {
             "         INNER JOIN SYS_RESOURCE_ROLE_MAPPING RRM " +
             "                    ON RRM.ROLE_ID = RT.ID " +
             "         INNER JOIN SYS_RESOURCE_TAB RES " +
-            "                    ON RES.URI = #{uri} AND RES.ID = RRM.RESOURCE_ID " +
+            "                    ON RES.URI = #{uri} AND RES.ID = RRM.RESOURCE_ID AND RES.TYPE = #{type} " +
             "GROUP BY RT.ID;")
-    Set<String> selectRoleNamesByResourceUri(String uri);
+    Set<String> selectRoleNamesByResourceUri(@Param("uri") String uri, @Param("type") int type);
 
 }

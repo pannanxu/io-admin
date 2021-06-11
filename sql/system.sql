@@ -2,20 +2,23 @@ CREATE TABLE `SYS_ACCOUNT_TAB`
 (
     `ID`                      BIGINT(19) UNSIGNED NOT NULL COMMENT 'ID',
     `USERNAME`                VARCHAR(16)         NOT NULL COMMENT '登陆用户名',
-    `PASSWORD`                VARCHAR(100)         NOT NULL COMMENT '登陆密码',
+    `PASSWORD`                VARCHAR(20)         NOT NULL COMMENT '登陆密码',
     `EMAIL`                   VARCHAR(30)                  DEFAULT '' COMMENT '邮箱',
     `PHONE`                   VARCHAR(11)                  DEFAULT '' COMMENT '手机号',
     `SOURCE_FROM`             TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '用户来源',
     `VERSION`                 INT(10)             NOT NULL DEFAULT 0 COMMENT '版本号',
-    `STATUS`                  TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '账号状态0:正常,1:异常',
     `ACCOUNT_NON_EXPIRED`     TINYINT(1)                   DEFAULT 0 COMMENT '账户是否过期(0:未过期,1:已过期)',
     `ACCOUNT_NON_LOCKED`      TINYINT(1)                   DEFAULT 0 COMMENT '账户是否锁定(0:未锁定,1:已锁定)',
     `CREDENTIALS_NON_EXPIRED` TINYINT(1)                   DEFAULT 0 COMMENT '凭证是否过期(0:未过期,1:已过期)',
-    `CREATE_TIME`             INT(11)             NOT NULL DEFAULT 0 COMMENT '用户创建时间',
-    `CREATE_IP`               VARCHAR(12)         NOT NULL DEFAULT '' COMMENT '创建者IP',
     `LAST_LOGIN_TIME`         INT(11)                      DEFAULT 0 COMMENT '用户最后一次登陆时间',
     `LAST_LOGIN_IP`           VARCHAR(11)                  DEFAULT 0 COMMENT '用户最后一次登陆IP',
     `LOGIN_COUNT`             INT(10)                      DEFAULT 0 COMMENT '登陆次数',
+    `CREATE_TIME`             INT(11)             NOT NULL DEFAULT 0 COMMENT '用户创建时间',
+    `CREATE_BY`               BIGINT(19) UNSIGNED NOT NULL COMMENT '创建人UID',
+    `CREATE_IP`               VARCHAR(12)         NOT NULL DEFAULT '' COMMENT '创建者IP',
+    `UPDATE_TIME`             INT(11) UNSIGNED    NOT NULL DEFAULT 0 COMMENT '更新时间',
+    `UPDATE_BY`               BIGINT(19) UNSIGNED NOT NULL COMMENT '修改人UID',
+    `STATUS`                  TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '账号状态0:正常,1:异常',
     `IS_DEL`                  TINYINT(1)          NOT NULL DEFAULT 0 COMMENT '逻辑删除(0:未删除,1:已删除)',
     PRIMARY KEY (`ID`),
     UNIQUE `IDX_PHONE` (`PHONE`),
@@ -23,12 +26,6 @@ CREATE TABLE `SYS_ACCOUNT_TAB`
     KEY `IDX_EMAIL` (`EMAIL`),
     KEY `IDX_IS_DEL` (`IS_DEL`)
 ) COMMENT = '账户模型';
-
-INSERT INTO `SYS_ACCOUNT_TAB`
-(ID, USERNAME, PASSWORD, PHONE, SOURCE_FROM, VERSION, STATUS, CREATE_TIME, CREATE_IP, IS_DEL)
-values (1, 'root', '$2a$10$5aWHU.Ijo3uACrhwP1160eWE6GPpQ8qJHe4eFzxawcMueZPehEKKy', '17777777777', 0, 1, 0, 0, '127.0.0.1', 0),
-       (2, 'admin', 'admin', '17777777778', 0, 1, 0, 0, '127.0.0.1', 0),
-       (3, 'user', 'user', '17777777779', 0, 1, 0, 0, '127.0.0.1', 0);
 
 CREATE TABLE `SYS_USER_DETAIL`
 (
@@ -67,22 +64,24 @@ CREATE TABLE `SYS_RESOURCE_TAB`
     `TITLE`       VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '菜单标题',
     `DESCRIPTION` VARCHAR(255)                 DEFAULT '' COMMENT '菜单描述',
     `URI`         VARCHAR(155)        NOT NULL DEFAULT '' COMMENT '菜单URI',
+    `METHOD`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '请求方式',
     `MARK`        VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '菜单标识',
     `TARGET`      VARCHAR(9)          NOT NULL DEFAULT '_self' COMMENT 'url打开方式(_blank,_parent,_self,_top)',
-    `icon`        VARCHAR(100)        NOT NULL DEFAULT '' COMMENT 'ICON图标',
+    `ICON`        VARCHAR(100)        NOT NULL DEFAULT '' COMMENT 'ICON图标',
     `PARAMS`      VARCHAR(500)                 DEFAULT '' COMMENT '菜单扩展字段',
-    `IS_SHOW`     TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否展示菜单(0:展示,1:不展示)',
-    `IS_REFRESH`  TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否刷新(0:刷新,1:不刷新)',
+    `IS_SHOW`     TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否展示菜单(1:展示,0:不展示)',
+    `IS_REFRESH`  TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否刷新(1:刷新,0:不刷新)',
     `MENU_SORT`   INT(4)                       DEFAULT 0 COMMENT '排序',
     `TYPE`        TINYINT(1) UNSIGNED          DEFAULT 0 COMMENT '资源类型(0:API,1:菜单,...)',
-    `CREATE_AT`   INT(11) UNSIGNED    NOT NULL DEFAULT 0 COMMENT '创建时间',
+    `CREATE_TIME` INT(11) UNSIGNED    NOT NULL DEFAULT 0 COMMENT '创建时间',
     `CREATE_BY`   BIGINT(19) UNSIGNED NOT NULL COMMENT '创建人UID',
     `UPDATE_TIME` INT(11) UNSIGNED    NOT NULL DEFAULT 0 COMMENT '更新时间',
     `UPDATE_BY`   BIGINT(19) UNSIGNED NOT NULL COMMENT '修改人UID',
     `STATUS`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态(0:正常,1:异常)',
     PRIMARY KEY (`ID`),
     KEY `IDX_PARENT_ID` (`PARENT_ID`),
-    UNIQUE `IDX_URL` (`URI`)
+    KEY `IND_TYPE` (`TYPE`, `STATUS`),
+    UNIQUE `IDX_URL` (`URI`, `METHOD`)
 ) COMMENT ='系统资源';
 
 CREATE TABLE `SYS_ROLE_TAB`
