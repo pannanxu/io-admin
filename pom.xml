@@ -32,6 +32,8 @@
         <lombok.version>1.18.12</lombok.version>
         <fastjson.version>1.2.75</fastjson.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <easy.captcha.version>1.6.2</easy.captcha.version>
+        <redis.version>1.4.0.RELEASE</redis.version>
 
         <!-- io.mvvm.service -->
         <system.version>1.0.0</system.version>
@@ -55,6 +57,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy.captcha.version}</version>
+            </dependency>
+            <!-- Redis -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-redis</artifactId>
+                <version>${redis.version}</version>
             </dependency>
             <!-- jwt -->
             <dependency>

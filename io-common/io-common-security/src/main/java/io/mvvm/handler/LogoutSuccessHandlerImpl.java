@@ -1,8 +1,8 @@
 package io.mvvm.handler;
 
-import com.alibaba.fastjson.JSON;
 import io.mvvm.constant.SecurityConstant;
 import io.mvvm.model.Ret;
+import io.mvvm.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -26,6 +26,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         log.info("登出成功");
         response.setContentType(SecurityConstant.CONTENT_TYPE_JSON_UTF8);
-        response.getWriter().write(JSON.toJSONString(Ret.success()));
+        response.getWriter().write(JsonUtil.toJsonString(Ret.success()));
     }
 }

@@ -1,11 +1,10 @@
 package io.mvvm.filter;
 
-import com.alibaba.fastjson.JSON;
 import io.mvvm.handler.AuthenticationTokenImpl;
 import io.mvvm.model.UserAccountDetails;
+import io.mvvm.utils.JsonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -43,8 +42,10 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
             throw new AuthenticationServiceException("无效请求");
         }
 
-        UserAccountDetails entity = JSON.parseObject(requestPostStr, UserAccountDetails.class);
-
+        UserAccountDetails entity = JsonUtil.parseObject(requestPostStr, UserAccountDetails.class);
+        if (null == entity) {
+            throw new AuthenticationServiceException("无效请求");
+        }
         String username = entity.getUsername();
         String password = entity.getPassword();
 
@@ -58,8 +59,6 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         username = username.trim();
         password = password.trim();
 
-//        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-//        setDetails(request, token);
         AuthenticationTokenImpl token = new AuthenticationTokenImpl(username, password);
         setDetails(request, token);
         return super.getAuthenticationManager().authenticate(token);

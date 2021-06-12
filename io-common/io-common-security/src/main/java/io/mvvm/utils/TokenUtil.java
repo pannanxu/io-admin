@@ -1,7 +1,5 @@
 package io.mvvm.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +8,6 @@ import io.jsonwebtoken.impl.DefaultClaims;
 import io.mvvm.model.JwtStoreUserDetailsDTO;
 import io.mvvm.model.UserAccountDetails;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -119,7 +116,7 @@ public class TokenUtil {
      */
     public static String generateToken(JwtStoreUserDetailsDTO user) {
         Claims map = new DefaultClaims();
-        map.put(STORE_USER_DETAILS_INFO, JSON.toJSONString(user));
+        map.put(STORE_USER_DETAILS_INFO, JsonUtil.toJsonString(user));
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setClaims(map)
@@ -147,7 +144,7 @@ public class TokenUtil {
             Claims body = jws.getBody();
             String user = ConvertUtil.parseString(body.get(STORE_USER_DETAILS_INFO));
             if (!"".equals(user)) {
-                return JSON.parseObject(user, JwtStoreUserDetailsDTO.class);
+                return JsonUtil.parseObject(user, JwtStoreUserDetailsDTO.class);
             }
         } catch (Exception e) {
             log.info("Token 解析出错: [ {} ]", token);

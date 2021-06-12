@@ -1,9 +1,9 @@
 package io.mvvm.handler;
 
-import com.alibaba.fastjson.JSON;
 import io.mvvm.constant.SecurityConstant;
 import io.mvvm.model.Ret;
 import io.mvvm.enums.RetTypeEnum;
+import io.mvvm.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -27,6 +27,6 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         log.warn(e.getMessage());
         httpServletResponse.setContentType(SecurityConstant.CONTENT_TYPE_JSON_UTF8);
-        httpServletResponse.getWriter().write(JSON.toJSONString(Ret.type(RetTypeEnum.AUTHORIZED_FAIL, null, e.getMessage())));
+        httpServletResponse.getWriter().write(JsonUtil.toJsonString(Ret.type(RetTypeEnum.AUTHORIZED_FAIL, null, e.getMessage())));
     }
 }
