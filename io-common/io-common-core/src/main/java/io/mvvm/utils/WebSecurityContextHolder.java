@@ -56,9 +56,6 @@ public class WebSecurityContextHolder {
         UserAccountDetails details = (UserAccountDetails) authentication.getPrincipal();
         JwtStoreUserDetailsDTO dto = new JwtStoreUserDetailsDTO();
         dto.setUsername(details.getUsername());
-        dto.setAccountNonExpired(details.isAccountNonExpired());
-        dto.setCredentialsNonExpired(details.isCredentialsNonExpired());
-        dto.setAccountNonLocked(details.isAccountNonLocked());
         dto.setRoles(
                 details.getAuthorities()
                         .stream()

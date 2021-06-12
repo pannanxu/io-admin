@@ -17,6 +17,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.security.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -116,9 +117,9 @@ public class TokenUtil {
      * @param user 账户信息
      * @return Token
      */
-    public static String generateToken(UserAccountDetails user) {
+    public static String generateToken(JwtStoreUserDetailsDTO user) {
         Claims map = new DefaultClaims();
-        map.put(STORE_USER_DETAILS_INFO, JSON.toJSONString(transform(user)));
+        map.put(STORE_USER_DETAILS_INFO, JSON.toJSONString(user));
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setClaims(map)
@@ -149,36 +150,18 @@ public class TokenUtil {
                 return JSON.parseObject(user, JwtStoreUserDetailsDTO.class);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("Token 解析出错: [ {} ]", token);
         }
         return null;
-    }
-
-    public static JwtStoreUserDetailsDTO transform(UserAccountDetails user) {
-        JwtStoreUserDetailsDTO dto = new JwtStoreUserDetailsDTO();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setAccountNonExpired(user.isAccountNonExpired());
-        dto.setEnabled(user.isEnabled());
-        dto.setAccountNonLocked(user.isAccountNonLocked());
-        dto.setCredentialsNonExpired(user.isCredentialsNonExpired());
-        dto.setRoles(
-                user.getAuthorities()
-                        .stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .collect(Collectors.toSet())
-        );
-        return dto;
     }
 
     public static UserAccountDetails transform(JwtStoreUserDetailsDTO dto) {
         UserAccountDetails details = new UserAccountDetails();
         details.setId(dto.getId());
         details.setUsername(dto.getUsername());
-        details.setAccountNonExpired(dto.getAccountNonExpired());
-        details.setEnabled(dto.getEnabled());
-        details.setAccountNonLocked(dto.getAccountNonLocked());
-        details.setCredentialsNonExpired(dto.getCredentialsNonExpired());
+        if (null == dto.getRoles()) {
+            dto.setRoles(new HashSet<>());
+        }
         details.setAuthorities(dto.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
         return details;
     }

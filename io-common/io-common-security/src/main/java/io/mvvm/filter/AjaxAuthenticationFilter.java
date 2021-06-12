@@ -1,6 +1,7 @@
 package io.mvvm.filter;
 
 import com.alibaba.fastjson.JSON;
+import io.mvvm.handler.AuthenticationTokenImpl;
 import io.mvvm.model.UserAccountDetails;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -31,7 +32,8 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         }
         // 如果不是JSON形式的请求（表单）则使用原有的处理器处理
         if (!request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
-            return super.attemptAuthentication(request, response);
+            // return super.attemptAuthentication(request, response);
+            throw new AuthenticationServiceException("无效请求");
         }
 
         String requestPostStr;
@@ -56,9 +58,16 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         username = username.trim();
         password = password.trim();
 
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-        super.setDetails(request, authRequest);
-        return super.getAuthenticationManager().authenticate(authRequest);
+//        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+//        setDetails(request, token);
+        AuthenticationTokenImpl token = new AuthenticationTokenImpl(username, password);
+        setDetails(request, token);
+        return super.getAuthenticationManager().authenticate(token);
+    }
+
+    protected void setDetails(HttpServletRequest request,
+                              AuthenticationTokenImpl authRequest) {
+        authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 
 

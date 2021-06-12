@@ -2,6 +2,7 @@ package io.mvvm.filter;
 
 import io.mvvm.model.JwtStoreUserDetailsDTO;
 import io.mvvm.model.UserAccountDetails;
+import io.mvvm.utils.ConvertUtil;
 import io.mvvm.utils.TokenUtil;
 import io.mvvm.utils.WebSecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,15 +29,19 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
+    private static final String TOKEN_SPLIT = "\\.";
+    private static final int TOKEN_SPLIT_LENGTH = 3;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith(TOKEN_PREFIX)) {
             final String authToken = authHeader.substring(TOKEN_PREFIX_LENGTH);
-            JwtStoreUserDetailsDTO details = TokenUtil.parseToken(authToken);
-            if (details != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                createAuthentication(TokenUtil.transform(details), request);
+            if (!ConvertUtil.EMPTY.equals(authToken) && authToken.split(TOKEN_SPLIT).length == TOKEN_SPLIT_LENGTH) {
+                JwtStoreUserDetailsDTO details = TokenUtil.parseToken(authToken);
+                if (details != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    createAuthentication(TokenUtil.transform(details), request);
+                }
             }
         }
         chain.doFilter(request, response);

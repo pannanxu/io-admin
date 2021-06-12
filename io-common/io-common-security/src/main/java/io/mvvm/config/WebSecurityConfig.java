@@ -4,7 +4,6 @@ import io.mvvm.constant.SecurityConstant;
 import io.mvvm.filter.AjaxAuthenticationFilter;
 import io.mvvm.filter.JwtAuthenticationTokenFilter;
 import io.mvvm.handler.*;
-import io.mvvm.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -36,8 +35,6 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
-    private UserDetailsServiceImpl userDetailsService;
-    @Resource
     private AuthenticationEntryPointImpl authenticationEntryPoint;
     @Resource
     private AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
@@ -53,11 +50,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UrlRolesFilterHandler urlRolesFilterHandler;
     @Resource
     private UrlRoleAuthHandler urlRoleAuthHandler;
+    @Resource
+    private AuthenticationProviderImpl authenticationProvider;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         // 自定义的安全认证
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override

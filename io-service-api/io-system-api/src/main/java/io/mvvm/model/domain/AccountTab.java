@@ -1,6 +1,7 @@
 package io.mvvm.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.mvvm.model.BaseDomain;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName("SYS_ACCOUNT_TAB")
-public class AccountTab implements Serializable {
+public class AccountTab extends BaseDomain implements Serializable {
 
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private Long id;
@@ -28,29 +29,27 @@ public class AccountTab implements Serializable {
     @TableField(value = "PHONE")
     private String phone;
     @TableField(value = "SOURCE_FROM")
-    private int sourceFrom;
+    private Integer sourceFrom;
     @Version
     @TableField(value = "VERSION")
-    private int version;
+    private Integer version;
     @TableField(value = "STATUS")
-    private int status;
+    private Integer status;
     @TableField(value = "ACCOUNT_NON_EXPIRED")
-    private boolean accountNonExpired;
+    private Boolean accountNonExpired;
     @TableField(value = "ACCOUNT_NON_LOCKED")
-    private boolean accountNonLocked;
+    private Boolean accountNonLocked;
     @TableField(value = "CREDENTIALS_NON_EXPIRED")
-    private boolean credentialsNonExpired;
-    @TableField(value = "CREATE_TIME")
-    private long createTime;
-    @TableField(value = "CREATE_IP")
-    private String createIp;
+    private Boolean credentialsNonExpired;
     @TableField(value = "LAST_LOGIN_TIME")
-    private long lastLoginTime;
+    private Long lastLoginTime;
     @TableField(value = "LAST_LOGIN_IP")
     private String lastLoginIp;
     @TableField(value = "LOGIN_COUNT")
-    private int loginCount;
+    private Integer loginCount;
+    @TableField(value = "CREATE_IP")
+    private Long createIp;
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "IS_DEL")
-    private int isDel;
+    private Integer isDel;
 }

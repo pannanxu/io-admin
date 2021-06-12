@@ -27,6 +27,6 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         log.warn(e.getMessage());
         httpServletResponse.setContentType(SecurityConstant.CONTENT_TYPE_JSON_UTF8);
-        httpServletResponse.getWriter().write(JSON.toJSONString(Ret.type(RetTypeEnum.AUTHORIZED_FAIL)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(Ret.type(RetTypeEnum.AUTHORIZED_FAIL, null, e.getMessage())));
     }
 }
