@@ -41,6 +41,10 @@ public enum RetTypeEnum {
      */
     NOT_FOUND(404, "资源未找到"),
     /**
+     * 未登录
+     */
+    NOT_LOGGED_IN(405, "未登录"),
+    /**
      * 限流
      */
     LIMITING(429, "操作频繁"),

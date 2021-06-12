@@ -2,28 +2,22 @@ package io.mvvm.config;
 
 import io.mvvm.constant.SecurityConstant;
 import io.mvvm.filter.AjaxAuthenticationFilter;
+import io.mvvm.filter.CaptchaVerificationFilter;
 import io.mvvm.filter.JwtAuthenticationTokenFilter;
 import io.mvvm.handler.*;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AuthenticatedVoter;
-import org.springframework.security.access.vote.RoleVoter;
-import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @program: io-admin
@@ -48,10 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Resource
     private UrlRolesFilterHandler urlRolesFilterHandler;
-    @Resource
-    private UrlRoleAuthHandler urlRoleAuthHandler;
+    // @Resource
+    // private UrlRoleAuthHandler urlRoleAuthHandler;
     @Resource
     private AuthenticationProviderImpl authenticationProvider;
+    @Resource
+    private UrlAccessDecisionManager urlAccessDecisionManager;
+    @Resource
+    private CaptchaVerificationFilter captchaVerificationFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -67,11 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         /* 无需认证的请求路径 */
-        http.authorizeRequests().antMatchers(SecurityConstant.AJAX_LOGIN_URI).permitAll();
+        // http.authorizeRequests().antMatchers(SecurityConstant.EXCLUDE_URI).permitAll();
         /* 动态url权限 */
         http.authorizeRequests().withObjectPostProcessor(new DefinedObjectPostProcessor());
         /* url决策 */
-        http.authorizeRequests().accessDecisionManager(accessDecisionManager());
+        // http.authorizeRequests().accessDecisionManager(accessDecisionManager());
         /* 开启授权认证 */
         http.authorizeRequests().anyRequest().authenticated();
 
@@ -80,6 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /* 权限不足(没有赋予角色) 处理 */
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
+        /* 验证码过滤器，在获取用户名和密码前面执行 */
+        http.addFilterBefore(captchaVerificationFilter, AjaxAuthenticationFilter.class);
         /* 自定义登陆表单解析器 */
         http.addFilterAt(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         /* 配置token验证过滤器 */
@@ -111,20 +111,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * 决策管理
      */
-    private AccessDecisionManager accessDecisionManager() {
+    /*private AccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<?>> decisionVoters = new ArrayList<>();
         decisionVoters.add(new WebExpressionVoter());
         decisionVoters.add(new AuthenticatedVoter());
         decisionVoters.add(new RoleVoter());
-        /* 路由权限管理 */
+        *//* 路由权限管理 *//*
         decisionVoters.add(urlRoleAuthHandler);
         return new UnanimousBased(decisionVoters);
-    }
+    }*/
 
     class DefinedObjectPostProcessor implements ObjectPostProcessor<FilterSecurityInterceptor> {
         @Override
         public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+            // 配置安全元数据
             object.setSecurityMetadataSource(urlRolesFilterHandler);
+            // 配置url权限的决策器
+            object.setAccessDecisionManager(urlAccessDecisionManager);
             return object;
         }
     }

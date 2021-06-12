@@ -1,5 +1,6 @@
 package io.mvvm.controller;
 
+import io.mvvm.exception.SecurityException;
 import io.mvvm.model.Ret;
 import io.mvvm.enums.RetTypeEnum;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -24,6 +25,11 @@ public class SecurityExceptionHandler {
     @ExceptionHandler(AuthenticationServiceException.class)
     public Ret<Object> authenticationServiceException(AuthenticationServiceException e) {
         return Ret.type(RetTypeEnum.AUTHORIZED_FAIL, null, e.getMessage());
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    public Ret<Object> securityException(SecurityException e) {
+        return Ret.type(RetTypeEnum.FAIL, null, e.getMessage());
     }
 
 }

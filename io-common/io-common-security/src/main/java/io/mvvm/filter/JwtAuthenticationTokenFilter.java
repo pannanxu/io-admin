@@ -1,11 +1,11 @@
 package io.mvvm.filter;
 
+import io.mvvm.handler.AuthenticationTokenImpl;
 import io.mvvm.model.JwtStoreUserDetailsDTO;
 import io.mvvm.model.UserAccountDetails;
 import io.mvvm.utils.ConvertUtil;
 import io.mvvm.utils.TokenUtil;
 import io.mvvm.utils.WebSecurityContextHolder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -48,8 +48,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     }
 
     private void createAuthentication(UserAccountDetails userDetails, HttpServletRequest request) {
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        AuthenticationTokenImpl authentication =
+                new AuthenticationTokenImpl(userDetails, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         WebSecurityContextHolder.setAuthentication(authentication);
     }

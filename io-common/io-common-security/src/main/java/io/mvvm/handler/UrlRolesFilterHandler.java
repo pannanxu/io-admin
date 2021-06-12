@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
@@ -31,11 +30,6 @@ import java.util.stream.Collectors;
 @Component
 public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSource {
 
-    /**
-     * 不需要授权的uri
-     */
-    public static final String[] EXCLUDE_URLS = {"/common/**"};
-
     @Resource
     private IUserAccountMapper iUserAccountMapper;
 
@@ -50,10 +44,13 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
         Object principal = authentication.getPrincipal();
         // 如果未登录，则验证是否为公共接口
         if (!(principal instanceof UserAccountDetails)) {
-            String role = hasPermission(requestUrl, EXCLUDE_URLS) ?
-                    SecurityConstant.ROLE_ANONYMOUS :
-                    SecurityConstant.ROLE_NULL;
-            return SecurityConfig.createList(role);
+            boolean hasPermission = hasPermission(requestUrl, SecurityConstant.EXCLUDE_URI);
+            if (hasPermission) {
+                // 如果是公共uri, 则直接放行
+                return null;
+            }
+            // 如果不是公共Uri, 则直接返回一个空角色, 让决策器去抛出异常
+            return SecurityConfig.createList(SecurityConstant.ROLE_NULL);
         }
 
         return iUserAccountMapper.selectRoleNamesByResourceUri(requestUrl, MethodEnum.getType(method))
