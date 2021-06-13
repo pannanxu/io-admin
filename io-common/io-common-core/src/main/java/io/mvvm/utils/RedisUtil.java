@@ -4,7 +4,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplateInit;
+    private RedisTemplate<String, String> redisTemplateInit;
 
     //region 公共方法
 
@@ -37,6 +37,30 @@ public class RedisUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * 给Key设置过期时间
+     * @param key   key
+     * @param date  过期时间
+     * @return      boolean
+     */
+    public Boolean expireAt(String key, Date date) {
+        try {
+            return redisTemplateInit.expireAt(key, date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 查找key
+     * @param pattern   pattern
+     * @return          keys
+     */
+    public Set<String> keys(String pattern) {
+        return redisTemplateInit.keys(pattern);
     }
 
     /**
@@ -91,7 +115,7 @@ public class RedisUtil {
      * @return String Value
      */
     public String get(String key) {
-        return key == null ? ConvertUtil.EMPTY : ConvertUtil.parseString(redisTemplateInit.opsForValue().get(key));
+        return redisTemplateInit.opsForValue().get(key);
     }
 
     /**
@@ -101,7 +125,7 @@ public class RedisUtil {
      * @param value VALUE
      * @return Boolean
      */
-    public Boolean set(String key, Object value) {
+    public Boolean set(String key, String value) {
         try {
             redisTemplateInit.opsForValue().set(key, value);
             return true;
@@ -119,7 +143,7 @@ public class RedisUtil {
      * @param time  超时时间
      * @return Boolean
      */
-    public Boolean set(String key, Object value, long time) {
+    public Boolean set(String key, String value, long time) {
         try {
             if (time > 0) {
                 redisTemplateInit.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -133,6 +157,89 @@ public class RedisUtil {
         return false;
     }
     //endregion
+
+    //region List
+
+    /**
+     * 根据索引获取list中的值
+     * @param key   key
+     * @param index 索引
+     * @return      value
+     */
+    public String listIndex(String key, long index) {
+        try {
+            return redisTemplateInit.boundListOps(key).index(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 获取全部的list
+     * @param key   key
+     * @return      val
+     */
+    public List<String> listRange(String key) {
+        return listRange(key, 0, -1);
+    }
+
+    /**
+     * 获取范围的值列表
+     * @param key   key
+     * @param start 开始
+     * @param end   结束, -1 全部
+     * @return      list
+     */
+    public List<String> listRange(String key, int start, int end) {
+        try {
+            return redisTemplateInit.boundListOps(key).range(start, end);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    /**
+     * 在之前添加值
+     * @param key   key
+     * @param val   val
+     * @return      count
+     */
+    public Long listPushLeft(String key, String val) {
+        try {
+            return redisTemplateInit.boundListOps(key).leftPush(val);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+
+    /**
+     * 在之前添加值
+     * @param key       key
+     * @param values    value
+     * @return          count
+     */
+    public Long listPushLeft(String key, Collection<String> values) {
+        try {
+            return redisTemplateInit.boundListOps(key).leftPushAll(toArray(values));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+    //endregion
+
+    private String[] toArray(Collection<String> values) {
+        int i = 0;
+        String[] val = new String[values.size()];
+        for (String value : values) {
+            val[i] = value;
+            i++;
+        }
+        return val;
+    }
 
 
 }
