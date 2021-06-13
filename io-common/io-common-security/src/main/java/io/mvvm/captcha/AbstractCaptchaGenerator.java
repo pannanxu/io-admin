@@ -1,5 +1,6 @@
 package io.mvvm.captcha;
 
+import io.mvvm.common.constants.RedisConstants;
 import io.mvvm.model.CaptchaVO;
 import io.mvvm.utils.RedisUtil;
 
@@ -17,7 +18,7 @@ public abstract class AbstractCaptchaGenerator implements ICaptchaGenerator {
     /**
      * 验证码在Redis中存储的位置
      */
-    public static final String CAPTCHA_CODE_STORE_TO_REDIS_KEY = "captcha:";
+    public static final String CAPTCHA_CODE_STORE_TO_REDIS_KEY = RedisConstants.CAPTCHA_CODE_STORE_TO_REDIS_KEY;
 
     @Resource
     protected RedisUtil redisUtil;

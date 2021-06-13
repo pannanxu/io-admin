@@ -1,12 +1,12 @@
 package io.mvvm.handler;
 
+import io.mvvm.common.constants.RedisConstants;
 import io.mvvm.constant.SecurityConstant;
-import io.mvvm.enums.MethodEnum;
-import io.mvvm.mapper.IUserAccountMapper;
-import io.mvvm.model.ResourceApiDO;
 import io.mvvm.model.UserAccountDetails;
+import io.mvvm.utils.RedisUtil;
 import io.mvvm.utils.WebSecurityContextHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSource {
 
     @Resource
-    private IUserAccountMapper iUserAccountMapper;
+    private RedisUtil redisUtil;
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
@@ -53,10 +53,11 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
             return SecurityConfig.createList(SecurityConstant.ROLE_NULL);
         }
 
-        return iUserAccountMapper.selectRoleNamesByResourceUri(requestUrl, MethodEnum.getType(method))
-                .stream()
+        String subUri = StringUtils.replace(requestUrl.substring(1), "/", ":");
+        String storeKey = RedisConstants.append(RedisConstants.RESOURCE_URI_ROLE, method.toUpperCase(), subUri);
+        return redisUtil.listRange(storeKey).stream()
                 .map(SecurityConfig::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -80,21 +81,4 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
         return false;
     }
 
-    /**
-     * 按照ant风格的uri做路由权限验证
-     * @param method        请求方式
-     * @param requestUrl    请求URI
-     * @param roleNames     用户角色列表
-     * @return              ConfigAttribute
-     */
-    private List<ConfigAttribute> byAntCreateConfigAttributes(String method, String requestUrl, Set<String> roleNames) {
-        AntPathMatcher antPathMatcher = new AntPathMatcher();
-        List<ConfigAttribute> roles = iUserAccountMapper.selectResourceApiByRoleName(MethodEnum.getType(method), roleNames)
-                .stream()
-                .filter(e -> antPathMatcher.match(e.getUri(), requestUrl))
-                .map(ResourceApiDO::getRoleName)
-                .map(SecurityConfig::new)
-                .collect(Collectors.toList());
-        return roles.isEmpty() ? SecurityConfig.createList(SecurityConstant.ROLE_NULL) : roles;
-    }
 }
