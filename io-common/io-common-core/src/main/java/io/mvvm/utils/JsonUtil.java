@@ -86,4 +86,15 @@ public class JsonUtil {
         return null;
     }
 
+    /**
+     * 将value转换为指定类型
+     * @param value Object
+     * @param clazz Class
+     * @param <T>   Class<T>
+     * @return      T
+     */
+    public static <T> T convertValue(Object value, Class<T> clazz) {
+        return value == null ? null : MAPPER.convertValue(value, clazz);
+    }
+
 }
