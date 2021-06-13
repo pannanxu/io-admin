@@ -11,7 +11,7 @@ public final class SecurityConstant {
     public static final String CONTENT_TYPE_JSON_UTF8 = "application/json; charset=utf-8";
 
     public static final String AJAX_LOGIN_URI = "/ajax/login";
-    public static final String[] EXCLUDE_URI = {AJAX_LOGIN_URI, "/common/**"};
+    public static final String[] EXCLUDE_URI = {AJAX_LOGIN_URI, "/common/**", "/favicon.ico"};
 
     /**
      * 当无权限的时候，返回此角色，让无权限处理器处理

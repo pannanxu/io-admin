@@ -13,11 +13,11 @@ import java.util.UUID;
  * @author: Mr. Pan
  * @create: 2021-06-12 21:34
  **/
-@Component
+@Component("defaultCaptchaGenerator")
 public class DefaultCaptchaGenerator extends AbstractCaptchaGenerator {
 
     @Override
-    public CaptchaVO generator() {
+    public CaptchaVO abstractGenerator() {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();
         String key = UUID.randomUUID().toString();
