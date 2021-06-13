@@ -1,6 +1,7 @@
 package io.mvvm.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.mvvm.model.domain.ResourceRoleDO;
 import io.mvvm.model.domain.ResourceTab;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,17 @@ public interface IResourceMapper extends BaseMapper<ResourceTab> {
      * @return      {@link List<ResourceTab>}
      */
     List<ResourceTab> selectResourceListByType(@Param("type") int type, @Param("roles") Set<String> roles);
+
+    /**
+     * 查询资源和角色
+     * @return  资源所拥有的角色
+     */
+    @Select("SELECT RES.URI, ROLE.ROLE_NAME, RES.METHOD\n" +
+            "FROM SYS_RESOURCE_TAB RES\n" +
+            "LEFT JOIN SYS_RESOURCE_ROLE_MAPPING RRM\n" +
+            "ON RES.ID = RRM.RESOURCE_ID\n" +
+            "INNER JOIN SYS_ROLE_TAB ROLE\n" +
+            "ON ROLE.ID = RRM.ROLE_ID")
+    List<ResourceRoleDO> selectResourceAndRole();
 
 }
