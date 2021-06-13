@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * @program: io-admin
  * @description: AccountVO
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-25 00:15
  **/
 @Getter

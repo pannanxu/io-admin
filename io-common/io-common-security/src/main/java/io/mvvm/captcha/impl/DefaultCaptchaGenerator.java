@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * @program: io-admin
  * @description: 默认验证码生成
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 21:34
  **/
 @Component("defaultCaptchaGenerator")

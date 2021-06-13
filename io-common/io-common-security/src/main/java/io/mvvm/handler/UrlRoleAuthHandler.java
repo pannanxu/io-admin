@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * @program: io-admin
  * @description: 访问决定投票 {@link UrlAccessDecisionManager}
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 20:13
  **/
 @Slf4j

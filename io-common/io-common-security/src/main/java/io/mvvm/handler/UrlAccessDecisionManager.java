@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @program: io-admin
  * @description: 决策管理器, 验证当前用户拥有的角色是否满足当前uri所需要的角色
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-13 00:11
  **/
 @Slf4j

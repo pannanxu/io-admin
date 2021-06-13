@@ -11,7 +11,7 @@ import java.util.Locale;
 /**
  * @program: io-admin
  * @description: 时间工具
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-29 01:55
  **/
 public class DateUtil {

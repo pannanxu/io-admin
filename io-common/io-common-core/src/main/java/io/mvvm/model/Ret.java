@@ -5,7 +5,7 @@ import io.mvvm.enums.RetTypeEnum;
 /**
  * @program: io-admin
  * @description: 响应实体
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 21:10
  **/
 @SuppressWarnings("unused")

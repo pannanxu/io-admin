@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * @program: io-admin
  * @description: 资源数据访问层
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-11 21:06
  **/
 @Mapper

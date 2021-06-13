@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @program: io-admin
  * @description: 验证码
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 22:58
  **/
 @RestController

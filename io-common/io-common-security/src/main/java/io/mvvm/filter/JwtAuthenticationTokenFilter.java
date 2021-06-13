@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * @program: io-admin
  * @description: Token 认证过滤器
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 23:11
  **/
 @Component

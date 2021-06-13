@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * @program: io-admin
  * @description: 账号密码，用户信息认证凭据
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 16:58
  **/
 public class AuthenticationTokenImpl extends AbstractAuthenticationToken {

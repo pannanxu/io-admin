@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * @program: io-admin
  * @description: 公共字段
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-11 21:00
  **/
 @Getter

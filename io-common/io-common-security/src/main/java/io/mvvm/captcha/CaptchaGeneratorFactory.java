@@ -5,7 +5,7 @@ import io.mvvm.utils.SpringContextHolder;
 /**
  * @program: io-admin
  * @description: 验证码工厂, 通过此类来得到 继承了 {@link AbstractCaptchaGenerator} 的bean
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-13 19:01
  **/
 public final class CaptchaGeneratorFactory {

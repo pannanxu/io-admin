@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * @program: io-admin
  * @description: UserAccountMapper
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 21:01
  **/
 @Mapper

@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * @program: io-admin
  * @description: AccountDTO
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 20:59
  **/
 @lombok.Data

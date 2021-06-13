@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * @program: io-admin
  * @description: 用户信息认证器
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 17:06
  **/
 @Component

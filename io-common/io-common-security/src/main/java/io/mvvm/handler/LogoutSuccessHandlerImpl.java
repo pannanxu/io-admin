@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @program: io-admin
  * @description: 登出处理器
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 20:11
  **/
 @Slf4j

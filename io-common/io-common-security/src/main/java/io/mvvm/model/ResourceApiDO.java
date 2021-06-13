@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @program: io-admin
  * @description: API资源
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-06 00:37
  **/
 @Data

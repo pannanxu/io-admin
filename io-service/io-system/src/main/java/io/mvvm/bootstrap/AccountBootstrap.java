@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * @program: io-admin
  * @description: 启动器使用式例
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-28 20:41
  **/
 @Slf4j

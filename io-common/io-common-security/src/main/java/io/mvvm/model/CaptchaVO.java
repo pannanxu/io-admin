@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @program: io-admin
  * @description: 验证码实体
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 22:55
  **/
 @Data

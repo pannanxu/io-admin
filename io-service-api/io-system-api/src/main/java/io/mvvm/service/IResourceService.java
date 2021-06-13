@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @program: io-admin
  * @description: 资源业务
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-11 20:48
  **/
 public interface IResourceService extends BaseService<ResourceTab> {

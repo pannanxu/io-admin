@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 /**
  * @program: io-admin
  * @description: Spring Security 配置类
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 19:43
  **/
 @Configuration

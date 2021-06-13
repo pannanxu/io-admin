@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @description: MyBatisPlus 通用 service 实现
  * @param <M>    Mapper 对象
  * @param <T>    实体
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-28 19:03
  **/
 public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {

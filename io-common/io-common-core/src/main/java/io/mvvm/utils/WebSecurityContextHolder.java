@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * @program: io-common-security
  * @description: Spring Security 上下文工具
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-22 11:46
  **/
 @Component

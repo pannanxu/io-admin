@@ -5,7 +5,7 @@ import io.mvvm.enums.RetTypeEnum;
 /**
  * @program: io-admin
  * @description: 业务异常
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-31 20:57
  **/
 public class BusinessException extends RuntimeException {

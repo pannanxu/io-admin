@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @program: io-admin
  * @description: 权限异常捕获
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 12:43
  **/
 @RestControllerAdvice

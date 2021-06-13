@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @program: io-admin
  * @description: 账户业务
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-31 20:10
  **/
 public interface IAccountService extends BaseService<AccountTab> {

@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @program: io-admin
  * @description: 用户账户模型
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 20:28
  **/
 @Getter

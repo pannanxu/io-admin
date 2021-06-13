@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * @program: mvvm-admin
  * @description: Spring上下文工具
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-22 11:32
  **/
 @Component

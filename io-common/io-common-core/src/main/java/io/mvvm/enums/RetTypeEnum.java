@@ -3,7 +3,7 @@ package io.mvvm.enums;
 /**
  * @program: io-admin
  * @description: 响应类型枚举
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-31 18:54
  **/
 public enum RetTypeEnum {

@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * @program: io-admin
  * @description: 认证用户无权限处理器
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 19:59
  **/
 @Slf4j

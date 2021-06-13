@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @program: io-admin
  * @description: 账户类型转换
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-05 21:04
  **/
 @org.mapstruct.Mapper

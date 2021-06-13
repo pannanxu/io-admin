@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * @program: io-admin
  * @description: 启动器
  * 在系统启动的时候，会去扫描 {@link IBootstrap} 接口的所有实现并启动，详情请看接口注释
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-28 20:23
  **/
 @Slf4j

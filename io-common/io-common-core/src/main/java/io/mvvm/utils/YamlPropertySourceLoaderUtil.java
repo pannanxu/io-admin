@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @program: mvvm-admin
  * @description: YAML 配置文件加载工具
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-22 23:33
  **/
 @Component

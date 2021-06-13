@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 /**
  * @program: io-admin
  * @description: Druid 数据源配置
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 16:37
  **/
 @Setter

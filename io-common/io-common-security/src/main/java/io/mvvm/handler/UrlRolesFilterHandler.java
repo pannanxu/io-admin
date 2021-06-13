@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * @program: io-admin
  * @description: 从数据库中获取url对应的role信息
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 20:23
  **/
 @Slf4j

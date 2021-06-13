@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @program: io-admin
  * @description: 请求方式
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-06 01:24
  **/
 public enum MethodEnum {

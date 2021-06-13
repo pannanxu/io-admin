@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @program: io-admin-cli
  * @description: Admin 启动器
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 00:57
  **/
 @SpringBootApplication

@@ -9,7 +9,7 @@ import javax.annotation.Resource;
  * @program: io-admin
  * @description: 验证码生成器, 更多验证码的实现继承此类, 并重写 {{@link #abstractGenerator()} ()}} 方法
  * 然后在工厂方法中 {@link CaptchaGeneratorFactory} 修改bean名称
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-12 21:30
  **/
 public abstract class AbstractCaptchaGenerator implements ICaptchaGenerator {

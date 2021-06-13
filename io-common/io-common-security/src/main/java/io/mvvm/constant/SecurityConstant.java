@@ -3,7 +3,7 @@ package io.mvvm.constant;
 /**
  * @program: io-admin
  * @description: 授权相关常量
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-03 00:56
  **/
 public final class SecurityConstant {

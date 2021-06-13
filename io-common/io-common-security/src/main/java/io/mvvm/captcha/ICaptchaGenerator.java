@@ -5,7 +5,7 @@ import io.mvvm.model.CaptchaVO;
 /**
  * @program: io-admin
  * @description: 验证码操作的抽象接口
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-13 18:22
  **/
 public interface ICaptchaGenerator {

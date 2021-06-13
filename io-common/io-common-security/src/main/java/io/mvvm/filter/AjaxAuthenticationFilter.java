@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * @program: io-admin
  * @description: AJAX 方式解析用户名和密码
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-02 20:27
  **/
 public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

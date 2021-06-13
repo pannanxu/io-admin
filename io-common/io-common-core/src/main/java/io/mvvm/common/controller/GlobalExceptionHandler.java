@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @program: io-admin
  * @description: 全局异常捕获
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-29 10:57
  **/
 @RestControllerAdvice(basePackages = "io.mvvm.controller", assignableTypes = BaseController.class)

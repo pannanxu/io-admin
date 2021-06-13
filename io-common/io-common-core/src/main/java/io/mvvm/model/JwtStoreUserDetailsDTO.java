@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @program: io-admin
  * @description: JWT 中存储的用户信息
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-06-07 23:10
  **/
 @Data

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @program: io-admin
  * @description: WebMVC配置
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-23 13:03
  **/
 @Configuration

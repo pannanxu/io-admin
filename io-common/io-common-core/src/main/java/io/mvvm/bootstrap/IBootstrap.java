@@ -6,7 +6,7 @@ package io.mvvm.bootstrap;
  * 当你需要在服务器启动 {{@link #start(String...)}} 或者关闭 {{@link #shutdown()}} 的时候触发一些事件
  * 那么你就可以直接实现此接口
  * 我们会按照 {{@link #order()}} 方法提供的数值进行顺序调用
- * @author: Mr. Pan
+ * @author: 潘南旭
  * @create: 2021-05-28 20:07
  **/
 public interface IBootstrap {
