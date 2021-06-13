@@ -1,6 +1,7 @@
 package io.mvvm.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,11 @@ import java.util.Map;
 public class JsonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    static {
+        // 忽略未定义字段
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     /**
      * 对象转JSON
