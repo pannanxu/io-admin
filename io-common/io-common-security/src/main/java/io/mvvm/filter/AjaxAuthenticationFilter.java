@@ -3,6 +3,7 @@ package io.mvvm.filter;
 import io.mvvm.handler.AuthenticationTokenImpl;
 import io.mvvm.model.UserAccountDetails;
 import io.mvvm.utils.JsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -27,24 +28,23 @@ public class AjaxAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         // 如果不是 POST 登陆，则表示非法请求
         if (!POST_METHOD.equals(request.getMethod())) {
-            throw new AuthenticationServiceException("无效请求");
+            throw new AuthenticationServiceException("用户名或密码不能为空");
         }
         // 如果不是JSON形式的请求（表单）则使用原有的处理器处理
-        if (!request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
-            // return super.attemptAuthentication(request, response);
-            throw new AuthenticationServiceException("无效请求");
+        if (!StringUtils.contains(request.getContentType(), MediaType.APPLICATION_JSON_VALUE)) {
+            throw new AuthenticationServiceException("用户名或密码不能为空");
         }
 
         String requestPostStr;
         try {
             requestPostStr = getRequestPostStr(request);
         } catch (IOException e) {
-            throw new AuthenticationServiceException("无效请求");
+            throw new AuthenticationServiceException("用户名或密码不能为空");
         }
 
         UserAccountDetails entity = JsonUtil.parseObject(requestPostStr, UserAccountDetails.class);
         if (null == entity) {
-            throw new AuthenticationServiceException("无效请求");
+            throw new AuthenticationServiceException("用户名或密码不能为空");
         }
         String username = entity.getUsername();
         String password = entity.getPassword();
