@@ -54,7 +54,7 @@ public class UrlRolesFilterHandler implements FilterInvocationSecurityMetadataSo
         }
 
         String subUri = StringUtils.replace(requestUrl.substring(1), "/", ":");
-        String storeKey = RedisConstants.append(RedisConstants.RESOURCE_URI_ROLE, method.toUpperCase(), subUri);
+        String storeKey = RedisConstants.append(RedisConstants.RESOURCE_URI_ROLE_API, method.toUpperCase(), subUri);
         return redisUtil.listRange(storeKey).stream()
                 .map(SecurityConfig::new)
                 .collect(Collectors.toList());

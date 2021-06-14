@@ -11,7 +11,8 @@ public final class RedisConstants {
     /**
      * 资源所需要的角色
      */
-    public static final String RESOURCE_URI_ROLE = "system:resource:uri:role:";
+    public static final String RESOURCE_URI_ROLE_API = "system:resource:uri:role:api:";
+    public static final String RESOURCE_URI_ROLE_MENU = "system:resource:uri:role:menu:";
     /**
      * 表单登陆验证码
      */

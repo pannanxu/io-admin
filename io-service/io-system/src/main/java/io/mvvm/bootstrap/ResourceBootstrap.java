@@ -35,17 +35,17 @@ public class ResourceBootstrap implements IBootstrap {
 
     @Override
     public void start(String... args) {
-        List<ResourceRoleDO> dos = resourceMapper.selectResourceAndRole();
-        dos.stream()
+        List<ResourceRoleDO> apis = resourceMapper.selectResourceAndRole(0);
+        apis.stream()
                 .collect(Collectors.groupingBy(ResourceRoleDO::getUri))
                 .forEach(
-                        (key, value) -> dos.stream()
+                        (key, value) -> apis.stream()
                                 .filter(e -> e.getUri().equals(key))
                                 .findFirst()
                                 .ifPresent(
                                         rdo -> redisUtil.listPushLeft(
                                                 RedisConstants.append(
-                                                        RedisConstants.RESOURCE_URI_ROLE,
+                                                        RedisConstants.RESOURCE_URI_ROLE_API,
                                                         MethodEnum.getType(rdo.getMethod()),
                                                         StringUtils.replace(
                                                                 key.substring(1),

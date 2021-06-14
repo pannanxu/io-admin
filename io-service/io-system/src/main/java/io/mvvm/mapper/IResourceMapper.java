@@ -30,14 +30,16 @@ public interface IResourceMapper extends BaseMapper<ResourceTab> {
 
     /**
      * 查询资源和角色
+     * @param type 0:api 1:menu
      * @return  资源所拥有的角色
      */
-    @Select("SELECT RES.URI, ROLE.ROLE_NAME, RES.METHOD\n" +
-            "FROM SYS_RESOURCE_TAB RES\n" +
-            "LEFT JOIN SYS_RESOURCE_ROLE_MAPPING RRM\n" +
-            "ON RES.ID = RRM.RESOURCE_ID\n" +
-            "INNER JOIN SYS_ROLE_TAB ROLE\n" +
-            "ON ROLE.ID = RRM.ROLE_ID")
-    List<ResourceRoleDO> selectResourceAndRole();
+    @Select("SELECT RES.URI, ROLE.ROLE_NAME, RES.METHOD " +
+            "FROM SYS_RESOURCE_TAB RES " +
+            "LEFT JOIN SYS_RESOURCE_ROLE_MAPPING RRM " +
+            "ON RES.ID = RRM.RESOURCE_ID " +
+            "INNER JOIN SYS_ROLE_TAB ROLE " +
+            "ON ROLE.ID = RRM.ROLE_ID " +
+            "WHERE RES.TYPE = #{type} ")
+    List<ResourceRoleDO> selectResourceAndRole(Integer type);
 
 }
