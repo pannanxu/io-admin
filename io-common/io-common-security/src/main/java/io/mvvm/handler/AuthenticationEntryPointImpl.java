@@ -27,6 +27,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         log.warn(e.getMessage());
         httpServletResponse.setContentType(SecurityConstant.CONTENT_TYPE_JSON_UTF8);
-        httpServletResponse.getWriter().write(JsonUtil.toJsonString(Ret.type(RetTypeEnum.NOT_LOGGED_IN)));
+        httpServletResponse.getWriter().write(JsonUtil.toJsonString(Ret.type(RetTypeEnum.UNAUTHORIZED)));
     }
 }

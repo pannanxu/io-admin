@@ -27,11 +27,11 @@ public enum RetTypeEnum {
     /**
      * 未授权
      */
-    UNAUTHORIZED(401, "未授权"),
+    UNAUTHORIZED(401, "未登陆"),
     /**
      * 授权失败
      */
-    AUTHORIZED_FAIL(402, "授权失败"),
+    AUTHORIZED_FAIL(402, "登陆失败"),
     /**
      * 无权限
      */
@@ -40,10 +40,6 @@ public enum RetTypeEnum {
      * 404
      */
     NOT_FOUND(404, "资源未找到"),
-    /**
-     * 未登录
-     */
-    NOT_LOGGED_IN(405, "未登录"),
     /**
      * 限流
      */
