@@ -109,6 +109,10 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
     <logger name="org.springframework" level="info" />
     <logger name="org.eclipse" level="info" />
     <logger name="com.alibaba" level="debug" />
+    <logger name="com.baomidou.mybatisplus.core.MybatisConfiguration" level="info" />
+    <logger name="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean" level="info" />
+    <logger name="org.mybatis.spring.mapper.ClassPathMapperScanner" level="info" />
+    <logger name="org.hibernate.validator.internal" level="info" />
 
     <root level="${logging.level.root}">
         <appender-ref ref="consoleLog"/>
