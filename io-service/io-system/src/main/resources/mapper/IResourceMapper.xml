@@ -13,7 +13,9 @@
         <foreach collection="roles" item="role" open="(" close=")" separator="," index="i">
             #{role}
         </foreach>
-        AND RT.TYPE = #{type}
+        <if test="type != -1">
+            AND RT.TYPE = #{type}
+        </if>
         AND RT.STATUS = 1
         GROUP BY RT.ID
     </select>

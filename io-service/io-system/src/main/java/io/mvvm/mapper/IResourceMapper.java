@@ -22,7 +22,7 @@ public interface IResourceMapper extends BaseMapper<ResourceTab> {
     /**
      * 按照用户角色查询资源列表
      *
-     * @param type  资源类型(0:API,1:菜单)
+     * @param type  资源类型(0:API,1:菜单,-1:不筛选)
      * @param roles 角色列表
      * @return      {@link List<ResourceTab>}
      */

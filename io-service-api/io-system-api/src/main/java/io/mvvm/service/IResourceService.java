@@ -2,7 +2,7 @@ package io.mvvm.service;
 
 import io.mvvm.common.mybatis.BaseService;
 import io.mvvm.model.domain.ResourceTab;
-import io.mvvm.model.vo.ResourceVO;
+import io.mvvm.model.vo.PermissionVO;
 
 import java.util.List;
 
@@ -15,10 +15,8 @@ import java.util.List;
 public interface IResourceService extends BaseService<ResourceTab> {
 
     /**
-     * 按照类型查询资源列表
-     * @param type  类型
-     * @return      资源列表
+     * 按照角色查询所拥有的资源
+     * @return  {@link List<PermissionVO>}
      */
-    List<ResourceVO> getResourceListByType(int type);
-
+    List<PermissionVO> getPermissionsByUserRole();
 }

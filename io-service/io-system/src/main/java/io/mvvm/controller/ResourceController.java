@@ -1,6 +1,7 @@
 package io.mvvm.controller;
 
 import io.mvvm.model.Ret;
+import io.mvvm.model.vo.PermissionVO;
 import io.mvvm.model.vo.ResourceVO;
 import io.mvvm.service.IResourceService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,10 @@ public class ResourceController {
     @Resource
     private IResourceService iResourceService;
 
-    @GetMapping("/menus/list")
-    public Ret<List<ResourceVO>> getMenus() {
-        List<ResourceVO> menus = iResourceService.getResourceListByType(1);
-        return Ret.success(menus);
+    @GetMapping("/permissions/list/by/user/role")
+    public Ret<List<PermissionVO>> getPermissionsByUserRole() {
+        List<PermissionVO> vos = iResourceService.getPermissionsByUserRole();
+        return Ret.success(vos);
     }
 
 }

@@ -5,6 +5,7 @@ import io.mvvm.mapper.IResourceMapper;
 import io.mvvm.model.JwtStoreUserDetailsDTO;
 import io.mvvm.model.conver.ResourceConverter;
 import io.mvvm.model.domain.ResourceTab;
+import io.mvvm.model.vo.PermissionVO;
 import io.mvvm.model.vo.ResourceVO;
 import io.mvvm.service.IResourceService;
 import io.mvvm.utils.WebSecurityContextHolder;
@@ -22,9 +23,9 @@ import java.util.List;
 public class ResourceServiceImpl extends BaseServiceImpl<IResourceMapper, ResourceTab> implements IResourceService {
 
     @Override
-    public List<ResourceVO> getResourceListByType(int type) {
+    public List<PermissionVO> getPermissionsByUserRole() {
         JwtStoreUserDetailsDTO userDetails = WebSecurityContextHolder.getUserDetails();
-        List<ResourceTab> tabs = super.baseMapper.selectResourceListByType(type, userDetails.getRoles());
-        return ResourceConverter.INSTANCE.converter(tabs);
+        List<ResourceTab> tabs = super.baseMapper.selectResourceListByType(-1, userDetails.getRoles());
+        return ResourceConverter.INSTANCE.converterPermission(tabs);
     }
 }
