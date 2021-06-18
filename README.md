@@ -1,53 +1,24 @@
 # 简介
 
-基于SpringBoot + React实现的权限管理脚手架，使用它可以快速帮助我们开发后台管理系统，
-可以实时管理用户的在线状态以及实时管理用户的上下线状态，
-项目后端核心技术采用 SpringBoot、MyBatisPlus、SpringSecurity；前端主要用于 React、Redux、ReactRouterDom、TypeScript(考虑中) 模块化结构简单易上手
+io-admin 是基于 spring boot 开发的一款快速开发脚手架, 整个工程采用模块化开发, 细粒度的划分让开发人员只需要关注自己模块, 并且采用了 Alibaba 编码规范, 限制开发人员的编码风格, 
+项目功能包含基础的权限管理(基于RBAC), 
+以及采用 SpringBoot 自带的 LogBack 日志框架让每行日志都拥有颜色区分, 让看日志不再有压力
+
+io-admin 不仅仅包含后端, 它还拥有一套和它相匹配的前端骨架(io-admin-web-react-ts), 
+前端采用 vite、react全家桶、typescript、antDesign, 
+加入了 esline 和 prettier 开发出让人觉得优雅的代码, 
+再结合于后端的rbac权限做到细粒度的权限控制, 例如某个按钮
+
+在未来, io-admin 还会陆续开发出基于 spring cloud 全家桶的脚手架, 
+这也许是一个漫长的过程, 但是我很享受这个过程, 因为在开源的过程中, 不需要考虑业务, 
+而是把更多的注意力集中在如何设计架构会更优雅, 如何才能让这个功能拥有更高的扩展性, 
+也算是将学习和工作中的零碎知识做一个总结
 
 # 功能
-
-1. 流程化管理:
-2. 用户管理:
-3. 菜单管理:
-4. 角色管理:
-5. 系统设置:
-6. 通知公告:
-7. 操作日志:
-8. 登录日志:
-9. 动态权限:
-10. 抢占登陆：
-11. 在线状态：
 
 # 目录说明
 
 ```text
-├─io-common                             公共包
-│  ├─io-common-core                     核心包，工具类，通用配置等都在此包
-│  └─io-common-security                 权限
-├─io-service                            业务模块，新增业务直接在此模块下创建一个新的子模块
-│  └─io-system                          系统管理模块
-│      └─src
-│          ├─main
-│          │  ├─java
-│          │  │  └─io
-│          │  │      └─mvvm
-│          │  │          ├─controller   API 接口
-│          │  │          ├─entity       实体
-│          │  │          ├─mapper       数据访问层
-│          │  │          └─service      业务实现
-│          │  └─resources
-│          │      └─mapper              mybatis 的 xml
-│          └─test                       测试
-├─io-web                                web模块，主要用于启动和配置一些唯一配置
-│  └─src
-│      ├─main
-│      │  ├─java
-│      │  │  └─io
-│      │  │      └─mvvm
-│      │  │          └─config           一些配置
-│      │  └─resources
-│      │      └─config
-└─sql                                   SQL
 ```
 
 # 使用教程
@@ -55,5 +26,3 @@
 ```bash
 git clone https://github.com/pannanxu/io-admin.git
 ```
-
-...
